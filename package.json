@@ -1,0 +1,19 @@
+{
+  "name": "auctioning",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hamad-Alfandi/Auctioning.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hamad-Alfandi/Auctioning/issues"
+  },
+  "homepage": "https://github.com/Hamad-Alfandi/Auctioning#readme"
+}
