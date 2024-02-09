@@ -13,7 +13,7 @@ const sellerSchema = new Schema({
   },
   Rating:{
     type: Number,
-    enum:['0','1','2','3','4','5']
+    enum:[0,1,2,3,4,5]
   },
   reviews:[reviewSchema],
   auctions:[auctionSchema]
