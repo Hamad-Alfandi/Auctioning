@@ -19,7 +19,7 @@ router.get('/', function (req, res, next) {
   })
   /////////////////////////////////////////////////////////////////////////////////////////////////
   let userType = req.cookies['userType']
-  res.render('auctioning/home', { title: 'Express', userType })
+  res.render('auctioning/show', { title: 'Home', userType })
 })
 
 module.exports = router

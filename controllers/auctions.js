@@ -1,5 +1,5 @@
 const Auction = require('../models/auction')
-const product = require('../models/product')
+const Product = require('../models/product')
 const Seller = require('../models/seller')
 const { ObjectId } = require('mongodb')
 function newAuction(req, res) {
@@ -21,10 +21,9 @@ async function addAuction(req, res) {
   auctionObj['endDate'] = req.body.endDate
   auctionObj['startingBid'] = req.body.startingBid
   try {
-    console.log('sellers:')
-    const SellerTry = await Seller.find({})
-    console.log(SellerTry)
-    await Auction.create(auctionObj)
+    let createdAuction = await Auction.create(auctionObj)
+    productObj['auction_id'] = createdAuction._id
+    await Product.create(productObj)
   } catch (err) {
     console.log(err)
   }
