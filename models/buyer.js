@@ -14,7 +14,7 @@ const buyerSchema = new Schema(
     email: String,
     reviews: [
       {
-        type: Schema.types.objecId,
+        type: Schema.types.objectId,
         ref: 'Review'
       }
     ]

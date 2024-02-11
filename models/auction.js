@@ -13,13 +13,29 @@ const auctionSchema = new Schema(
       required: true
     },
     startingBid: {
-      type: Number,
+      type: String, //change to number
       required: true
     },
     highestBid: Number,
     buyer_id: {
       type: Schema.Types.ObjectId,
       ref: 'Buyer'
+    },
+    category: {
+      type: String,
+      required: true,
+      enum: [
+        'Home Living',
+        'Clothing',
+        'Bags',
+        'Jewelry',
+        'Beauty',
+        'Collectibles',
+        'Art',
+        'Books',
+        'Other'
+      ],
+      default: 'Other'
     }
   },
   {

@@ -1,0 +1,55 @@
+<%- include('../partials/header') %>
+<h1>Add Auction</h1>
+<form method="POST" action="/auction">
+  <label>Product Name
+    <br>
+    <input type="text" placeholder="name" name="name">
+  </label><br>
+  <label>Description
+    <br>
+    <input type="text" placeholder="Description" name="description">
+  </label><br>
+  <label>Image File
+    <br>
+    <input type="text" placeholder="image" name="image">
+  </label><br>
+  <label>Category
+    <br>
+    <select name="category">
+      <option value="Home Living">Home Living</option>
+    <option value="Clothing">Clothing</option>
+      <option value="Bags">Bags</option>
+      <option value="Jewelry">Jewelry</option>
+      <option value="Beauty">Beauty</option>
+      <option value="Collectibles">Collectibles</option>
+      <option value="Art">Art</option>
+      <option value="Books">Books</option>
+      <option value="Other">Other</option>
+    </select>
+  </label><br>
+  <label>Auction End Date
+    <br>
+    <input type="date" name="endDate">
+  </label><br>
+  <label>Starting Bid
+    <br>
+    <input type="text" placeholder="Starting Bid" name="startingBid">
+  </label><br>
+  <button type="submit" class="add-auction">Add Auction</button>
+</form>
+<%- include('../partials/footer') %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%- include('../partials/footer') %>
