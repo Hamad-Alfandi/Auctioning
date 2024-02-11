@@ -1,3 +1,58 @@
 <%- include('../partials/header') %>
-<h1>Page to view All Categories</h1>
-<%- include('../partials/footer') %>
+  <style>
+    .database-entry {
+      display: flex;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .entry-image {
+      max-width: 100px;
+      max-height: 100px;
+      margin-right: 10px;
+    }
+
+    .entry-details {
+      flex-grow: 1;
+    }
+  </style>
+  
+  <h1>Page to view All Categories</h1>
+
+  <%= title %>
+
+
+
+    <% categories.forEach(e=> { %>
+
+
+      <div class="database-entry">
+
+
+        <img src="#" alt="imgs" class="entry-image">
+
+        <div class="entry-details">
+
+          <h2>
+            <%= e.name %>
+          </h2>
+          <p>
+            <%= e.description %>
+          </p>
+
+        </div>
+      </div>
+
+
+      <% }); %>
+
+
+
+
+
+
+
+
+
+        <%- include('../partials/footer') %>

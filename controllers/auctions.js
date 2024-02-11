@@ -3,11 +3,13 @@ const Product = require('../models/product')
 const Seller = require('../models/seller')
 
 const { ObjectId } = require('mongodb')
+
 function newAuction(req, res) {
   let userType = req.cookies['userType']
   console.log('hi')
   res.render('auction/new', { title: 'Add auction', errorMsg: '', userType })
 }
+
 async function showAuctions(req, res) {
   //TEMPORARY COOKIE UNTIL LOG IN CODED
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,6 +43,10 @@ async function showAuctions(req, res) {
   ]).sort({ createdAt: -1 })
   res.render('auctioning/show', { title: 'Home', userType, recentProducts })
 }
+
+
+
+
 async function addAuction(req, res) {
   //TEMPORARY MUST BE CHANGED AFTER USER LOG IN CODED
 
