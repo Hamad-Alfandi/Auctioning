@@ -1,12 +1,46 @@
 const Auction = require('../models/auction')
 const Product = require('../models/product')
 const Seller = require('../models/seller')
+
 const { ObjectId } = require('mongodb')
 function newAuction(req, res) {
   let userType = req.cookies['userType']
+  console.log('hi')
   res.render('auction/new', { title: 'Add auction', errorMsg: '', userType })
 }
+async function showAuctions(req, res) {
+  //TEMPORARY COOKIE UNTIL LOG IN CODED
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+  res.cookie('userEmailCookie', 'yas@something.com', {
+    expires: new Date(Date.now() + 900000),
+    httpOnly: true
+  })
+  res.cookie('userType', 'Seller', {
+    expires: new Date(Date.now() + 900000),
+    httpOnly: true
+  })
+  res.cookie('userIdCookie', '65c755919487889fde5c20ac', {
+    expires: new Date(Date.now() + 900000),
+    httpOnly: true
+  })
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+  let userType = req.cookies['userType']
+  // let recentProducts = await Auction.find({}).sort({})
+  // console.log('recenttttttts---------')
+  // console.log(recentProducts)
 
+  const recentProducts = await Product.aggregate([
+    {
+      $lookup: {
+        from: 'auctions',
+        localField: 'auction_id',
+        foreignField: '_id',
+        as: 'auction'
+      }
+    }
+  ]).sort({ createdAt: -1 })
+  res.render('auctioning/show', { title: 'Home', userType, recentProducts })
+}
 async function addAuction(req, res) {
   //TEMPORARY MUST BE CHANGED AFTER USER LOG IN CODED
 
@@ -33,5 +67,6 @@ async function addAuction(req, res) {
 
 module.exports = {
   newAuction,
-  addAuction
+  addAuction,
+  showAuctions
 }
