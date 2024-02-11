@@ -9,9 +9,13 @@
       <img src="/images/camera.svg">
        <a href="/auctioning">Home</a>
        <a href="/categories">All Products</a>
-       <% if(user) { %>
+
+       <%if(userType==='Seller'){%>
+
        <a href="/auction">Add Auction</a>
+       <%}%>
        <a href="/account">Account</a>
+       
        <a href="/account/signIn">Sign in</a>
        <% } else { %>
         <a href="/auth/google" class="login">LOG IN&nbsp;<img src="https://i.imgur.com/FHjYyi0.png"></a>

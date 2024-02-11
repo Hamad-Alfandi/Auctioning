@@ -1,9 +1,8 @@
 var express = require('express')
 var router = express.Router()
+const auctionsCtrl = require('../controllers/auctions')
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('auctioning/home', { title: 'Express' })
-})
+router.get('/', auctionsCtrl.showAuctions)
 
 module.exports = router

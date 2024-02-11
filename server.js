@@ -6,6 +6,7 @@ var logger = require("morgan")
 var session = require("express-session")
 
 require("dotenv").config()
+require('./config/database')
 
 var indexRouter = require("./routes/index")
 var auctioningRouter = require("./routes/auctioning")
