@@ -4,9 +4,11 @@ var path = require("path")
 var cookieParser = require("cookie-parser")
 var logger = require("morgan")
 var session = require("express-session")
+var passport = require("passport")
 
 require("dotenv").config()
-require('./config/database')
+require("./config/database")
+require("./config/passport")
 
 var indexRouter = require("./routes/index")
 var auctioningRouter = require("./routes/auctioning")
@@ -32,6 +34,8 @@ app.use(
     saveUninitialized: true,
   })
 )
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use("/", indexRouter)
 app.use("/auctioning", auctioningRouter)
