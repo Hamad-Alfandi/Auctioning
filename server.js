@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser')
 var logger = require('morgan')
 require('dotenv').config()
 require('./config/database')
+
+
 var indexRouter = require('./routes/index')
 var auctioningRouter = require('./routes/auctioning')
 var categoriesRouter = require('./routes/categories')
