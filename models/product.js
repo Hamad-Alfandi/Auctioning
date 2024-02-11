@@ -14,22 +14,7 @@ const productSchema = new Schema(
     description: {
       type: String
     },
-    image: String,
-    category: {
-      type: String,
-      required: true,
-      enum: [
-        'Home Living',
-        'Clothing',
-        'Bags',
-        'Jewelry',
-        'Beauty',
-        'Collectibles',
-        'Art',
-        'Books'
-      ],
-      default: 'Home Living'
-    }
+    image: String
   },
   {
     timestamps: true
