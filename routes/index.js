@@ -4,7 +4,7 @@ const passport = require("passport")
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.redirect("/auctioning")
-  res.render("index", { title: "Express" })
+  // res.render("index", { title: "Express" })
 })
 // Google OAuth login route
 router.get(
@@ -23,9 +23,9 @@ router.get(
 )
 
 // OAuth logout route
-router.get("/logout", function (req, res) {
-  req.logout(function () {
-    res.redirect("/movies")
+router.get("/logout", (req, res) => {
+  req.logout(() => {
+    res.redirect("/auctioning")
   })
 })
 module.exports = router

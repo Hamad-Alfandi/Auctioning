@@ -1,6 +1,6 @@
 body {
   padding: 50px;
-  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -10,4 +10,14 @@ a {
 .mainAuctionsDiv {
   display: flex;
   justify-content: space-around;
+}
+.login {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  height: 34px;
+}
+
+.login img {
+  height: 20px;
 }
