@@ -25,9 +25,6 @@ async function showAuctions(req, res) {
   })
   /////////////////////////////////////////////////////////////////////////////////////////////////
   let userType = req.cookies['userType']
-  // let recentProducts = await Auction.find({}).sort({})
-  // console.log('recenttttttts---------')
-  // console.log(recentProducts)
 
   const recentProducts = await Product.aggregate([
     {
@@ -42,8 +39,6 @@ async function showAuctions(req, res) {
   res.render('auctioning/show', { title: 'Home', userType, recentProducts })
 }
 async function addAuction(req, res) {
-  //TEMPORARY MUST BE CHANGED AFTER USER LOG IN CODED
-
   let productObj = {}
   let auctionObj = {}
   productObj['name'] = req.body.name
@@ -61,7 +56,6 @@ async function addAuction(req, res) {
   } catch (err) {
     console.log(err)
   }
-  console.log(auctionObj)
   res.redirect(`/auctioning`)
 }
 
