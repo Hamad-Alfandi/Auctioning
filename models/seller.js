@@ -9,7 +9,7 @@ const sellerSchema = new Schema(
     },
     googleId: {
       type: String,
-      required: true,
+      // required: true,
     },
     email: {
       type: String,
