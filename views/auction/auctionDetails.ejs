@@ -1,0 +1,39 @@
+<%- include('../partials/header') %>
+<h1><%=productDetails.name%> details</h1>
+<div class="productDetails">
+<div class="productDetailLeftDiv"><img src="https://www.dior.com/couture/ecommerce/media/catalog/product/9/Q/1699371916_M0565ONGE_M900_E01_GH.jpg" alt="<%=productDetails.name%>" style="width: 400px;">
+<h4>Time Left to Bid: <%=auctionDetails.endDate%></h4>
+</div>
+<div class="productDetailRightDiv">
+  <div class="biddingDiv">
+  <%if(auctionDetails.currentBid){%>
+  <h2>
+Current Highest Bid: </h2>
+<h3><%=auctionDetails.currentBid%>
+  </h3>
+  <%}%>
+  <!-- CHANGE ONCE ACCOUNT LOGIN SETTLED -->
+  <%if(userType&&userType==='Buyer'){%>
+    <h2>Bid:</h2>
+   <form action="../account/<%=userId%>" method="POST">
+    
+    <input type="text" placeholder="Bid"><label> BHD</label>
+    <button type="submit" class="add-bid">Bid</button>
+   </form> 
+    <%}%>
+  </div>
+  <div class="detailsDiv">
+    <h2>
+      Details: 
+    </h2>
+    <h3><%=productDetails.description%></h3>
+<h2>Seller:</h2>
+<h3><a href="../account/<%=sellerDetails._id%>"><%=sellerDetails.name%></a></h3>
+  </div>
+</div>
+</div>
+<!-- productDetails,
+auctionDetails,
+sellerDetails -->
+
+<%- include('../partials/footer') %>
