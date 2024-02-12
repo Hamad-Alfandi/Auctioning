@@ -7,7 +7,8 @@ a {
   color: #00b7ff;
 }
 
-.mainAuctionsDiv {
+.mainAuctionsDiv,
+.productDetails {
   display: flex;
   justify-content: space-around;
 }

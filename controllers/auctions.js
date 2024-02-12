@@ -3,12 +3,49 @@ const Product = require("../models/product")
 const Seller = require("../models/seller")
 const passport = require("passport")
 
-const { ObjectId } = require("mongodb")
+
+const { ObjectId } = require('mongodb')
 function newAuction(req, res) {
   let userType = req.cookies["userType"]
   console.log("hi")
   res.render("auction/new", { title: "Add auction", errorMsg: "", userType })
 }
+
+async function showAuction(req, res) {
+  let userType = req.cookies['userType']
+  let userId = req.cookies['userIdCookie']
+  // console.log('paraaaaaams:')
+  let productId = req.params.Productid
+  const productDetails = await Product.findOne({ _id: productId })
+
+  let auctionId = productDetails.auction_id
+  const auctionDetails = await Auction.findOne({
+    _id: auctionId
+  })
+
+  let sellerId = auctionDetails.seller_id
+
+  // const sellerDetails = await Seller.findOne({
+  //   _id: sellerId
+  // })
+  const sellerDetails = await Seller.findOne({
+    _id: sellerId
+  })
+
+  console.log(`the product: ${productDetails}`)
+  console.log(`the auction: ${auctionDetails}`)
+  console.log(`the seller: ${sellerDetails}`)
+
+  res.render('auction/auctionDetails', {
+    title: 'Auction Details',
+    userType,
+    userId,
+    productDetails,
+    auctionDetails,
+    sellerDetails
+  })
+}
+
 async function showAuctions(req, res) {
   //TEMPORARY COOKIE UNTIL LOG IN CODED
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,11 +63,8 @@ async function showAuctions(req, res) {
     httpOnly: true,
   })
   /////////////////////////////////////////////////////////////////////////////////////////////////
-  let userType = req.cookies["userType"]
 
-  // let recentProducts = await Auction.find({}).sort({})
-  // console.log('recenttttttts---------')
-  // console.log(recentProducts)
+  let userType = req.cookies['userType']
 
   const recentProducts = await Product.aggregate([
     {
@@ -44,19 +78,21 @@ async function showAuctions(req, res) {
   ]).sort({ createdAt: -1 })
   res.render("auctioning/show", { title: "Home", userType, recentProducts })
 }
-async function addAuction(req, res) {
-  //TEMPORARY MUST BE CHANGED AFTER USER LOG IN CODED
 
+async function addAuction(req, res) {
   let productObj = {}
   let auctionObj = {}
   productObj["name"] = req.body.name
   productObj["description"] = req.body.description
   productObj["image"] = req.body.image
 
-  auctionObj["category"] = req.body.category
-  auctionObj["seller_id"] = req.cookies["userIdCookie"]
-  auctionObj["endDate"] = req.body.endDate
-  auctionObj["startingBid"] = req.body.startingBid
+
+  auctionObj['category'] = req.body.category
+  auctionObj['seller_id'] = req.cookies['userIdCookie']
+  auctionObj['endDate'] = req.body.endDate
+  auctionObj['startingBid'] = req.body.startingBid
+
+
   try {
     let createdAuction = await Auction.create(auctionObj)
     productObj["auction_id"] = createdAuction._id
@@ -64,7 +100,6 @@ async function addAuction(req, res) {
   } catch (err) {
     console.log(err)
   }
-  console.log(auctionObj)
   res.redirect(`/auctioning`)
 }
 
@@ -72,4 +107,7 @@ module.exports = {
   newAuction,
   addAuction,
   showAuctions,
+
+  showAuction
+
 }
