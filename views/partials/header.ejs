@@ -8,7 +8,9 @@
     <nav>
        <a href="/auctioning">Home</a>
        <a href="/categories">All Products</a>
-      
+       <%if(userType==='Seller'){%>
+        <a href="/auction">Add Auction</a>
+        <%}%>
        <a href="/account">Account</a>
        
        <a href="/account/signIn">Sign in</a>
