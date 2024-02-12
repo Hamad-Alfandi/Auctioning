@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser")
 var logger = require("morgan")
 var session = require("express-session")
 var passport = require("passport")
+const methodOverride = require("method-override")
 
 require("dotenv").config()
 require("./config/database")
@@ -15,7 +16,7 @@ var auctioningRouter = require("./routes/auctioning")
 var categoriesRouter = require("./routes/categories")
 var auctionRouter = require("./routes/auction")
 var accountRouter = require("./routes/account")
-
+const usersRouter = require("./routes/users")
 var app = express()
 
 // view engine setup
@@ -40,12 +41,13 @@ app.use(function (req, res, next) {
   res.locals.user = req.user
   next()
 })
-
+app.use(methodOverride("_method"))
 app.use("/", indexRouter)
 app.use("/auctioning", auctioningRouter)
 app.use("/categories", categoriesRouter)
 app.use("/auction", auctionRouter)
 app.use("/account", accountRouter)
+app.use("/users", usersRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
