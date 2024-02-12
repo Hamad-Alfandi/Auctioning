@@ -53,6 +53,9 @@ async function showAuction(req, res) {
   let userType
   let userId
 
+  let userType
+  let userId
+
   let productId = req.params.Productid
   const productDetails = await Product.findOne({ _id: productId })
 
@@ -90,6 +93,7 @@ async function showAuction(req, res) {
     title: "Auction Details",
     userType,
     userId,
+    belongToUser,
     belongToUser,
     productDetails,
     auctionDetails,

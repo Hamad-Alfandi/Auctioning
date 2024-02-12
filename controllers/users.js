@@ -6,6 +6,7 @@ const { ObjectId } = require("mongodb")
 const update = async (req, res) => {
   const user = await User.findById(req.params.id)
   const convertedId = new ObjectId(req.params.id)
+  const convertedId = new ObjectId(req.params.id)
   user.role = req.body.role
   user.register = true
   let roleCollectionObj = {}

@@ -10,8 +10,10 @@
        <a href="/auctioning">Home</a>
        <a href="/categories">All Products</a>
 
-        <%  if (user && user.role === 'seller') { %>
+        <%  if (user) { 
+        if(user.role === 'seller'){%>
           <a href="/auction">Add Auction</a>
+          <% } %>
           <a href="/account/<%= user._id %>">Account</a>
        
         <% } %>
@@ -24,7 +26,6 @@
        <% } else { %>
        <a  href="/logout">LOGOUT</a>
        <% } %>
-     
 
     </nav>
     <main>
