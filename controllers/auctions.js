@@ -44,9 +44,6 @@ async function showAuctions(req, res) {
   res.render('auctioning/show', { title: 'Home', userType, recentProducts })
 }
 
-
-
-
 async function addAuction(req, res) {
   //TEMPORARY MUST BE CHANGED AFTER USER LOG IN CODED
 
