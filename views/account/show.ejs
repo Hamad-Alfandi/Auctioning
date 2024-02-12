@@ -1,4 +1,12 @@
 <%- include('../partials/header') %>
-<h1>Page to view Account Information</h1>
+<%  if (user && user.role === 'seller') { %>
+<h1>Seller name: <%= user.name %> </h1>
+<h2>reviews:</h2>
+<h2>Products:</h2>
+<%}%>
 
+<%  if (user && user.role === 'buyer') { %>
+  <h1>buyer name: <%= user.name %> </h1>
+  <h2>Products</h2>
+  <%}%>
 <%- include('../partials/footer') %>

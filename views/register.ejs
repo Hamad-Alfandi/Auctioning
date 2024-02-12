@@ -1,4 +1,10 @@
 <!-- form with dropdown and submit button -->
+<style>
+  
+  button{
+    background-color: yellow;
+  }
+</style>
 <form action="/users/<%= user._id %>?_method=put" method="POST">
 <select name="role" >
   <option value="buyer">buyer </option>

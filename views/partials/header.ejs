@@ -15,7 +15,11 @@
           <a href="/account/<%= user._id %>">Account</a>
        
         <% } %>
-   
+        <%  if (user && user.role === 'buyer') { %>
+          
+          <a href="/account/<%= user._id %>">Account</a>
+       
+        <% } %>
        <% if (!user) { %>
        <a href="/auth/google" class="login">LOG IN&nbsp;<img src="https://i.imgur.com/FHjYyi0.png"></a>
        <% } else { %>
