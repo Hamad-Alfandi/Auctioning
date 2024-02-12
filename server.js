@@ -3,9 +3,12 @@ var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
+var session = require('express-session')
+var passport = require('passport')
+
 require('dotenv').config()
 require('./config/database')
-
+// require('./config/passport')
 
 var indexRouter = require('./routes/index')
 var auctioningRouter = require('./routes/auctioning')
@@ -22,8 +25,17 @@ app.set('view engine', 'ejs')
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser())
+app.use(cookieParser('secret')) //CHANGE THIS WHEN LOGIN MODIFIED
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true
+  })
+)
+// app.use(passport.initialize())
+// app.use(passport.session())
 
 app.use('/', indexRouter)
 app.use('/auctioning', auctioningRouter)

@@ -1,28 +1,34 @@
 const passport = require("passport")
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy
-const Seller = require("../models/seller")
-const Buyer = require("../models/buyer")
+const User = require("../models/user")
+
 passport.use(
   new GoogleStrategy(
+    // Configuration object
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_SECRET,
       callbackURL: process.env.GOOGLE_CALLBACK,
     },
-
+    // The verify callback function...
+    // Marking a function as an async function allows us
+    // to consume promises using the await keyword
     async function (accessToken, refreshToken, profile, cb) {
+      // When using async/await  we use a
+      // try/catch block to handle an error
       try {
-        let seller = await Seller.findOne({ googleId: profile.id })
-
-        if (seller) return cb(null, seller)
-
-        seller = await Seller.create({
+        // A user has logged in with OAuth...
+        let user = await User.findOne({ googleId: profile.id })
+        // Existing user found, so provide it to passport
+        if (user) return cb(null, user)
+        // We have a new user via OAuth!
+        user = await User.create({
           name: profile.displayName,
           googleId: profile.id,
           email: profile.emails[0].value,
           avatar: profile.photos[0].value,
         })
-        return cb(null, seller)
+        return cb(null, user)
       } catch (err) {
         return cb(err)
       }
@@ -30,21 +36,21 @@ passport.use(
   )
 )
 
-passport.serializeSeller(function (seller, cb) {
+passport.serializeUser(function (user, cb) {
   try {
-    if (!seller._id) {
-      throw new Error("Seseller object is missing _id property")
+    if (!user._id) {
+      throw new Error("User object is missing _id property")
     }
-    cb(null, seller._id)
+    cb(null, user._id)
   } catch (err) {
     cb(err)
   }
 })
 
-passport.deserializeSeller(async function (id, cb) {
+passport.deserializeUser(async function (id, cb) {
   try {
-    const seller = await Seller.findById(id)
-    cb(null, seller)
+    const user = await User.findById(id)
+    cb(null, user)
   } catch (err) {
     cb(err)
   }
