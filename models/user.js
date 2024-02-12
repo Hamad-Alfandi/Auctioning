@@ -9,6 +9,8 @@ const userSchema = new Schema(
     },
     email: String,
     avatar: String,
+    register: { type: Boolean, default: false },
+    role: { type: String, default: "buyer", enum: ["buyer", "seller"] },
   },
   {
     timestamps: true,
