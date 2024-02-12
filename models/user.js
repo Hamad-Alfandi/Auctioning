@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
+
 const userSchema = new Schema(
   {
     name: String,
@@ -12,6 +13,7 @@ const userSchema = new Schema(
     register: { type: Boolean, default: false },
     role: { type: String, default: "buyer", enum: ["buyer", "seller"] },
   },
+
   {
     timestamps: true,
   }

@@ -7,7 +7,7 @@ const update = async (req, res) => {
   user.role = req.body.role
   user.register = true
   await user.save()
-  res.redirect("/auctioning")
+  // res.redirect("/auctioning")
 }
 module.exports = {
   update,

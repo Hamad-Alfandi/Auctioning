@@ -1,14 +1,20 @@
 <!-- form with dropdown and submit button -->
 <style>
-  
+  h2{
+    margin-top: 100px;
+    text-align:  center;
+  }
   button{
     background-color: yellow;
   }
 </style>
 <form action="/users/<%= user._id %>?_method=put" method="POST">
-<select name="role" >
+<h2> Continue as :</h2>
+
+  <select name="role" >
   <option value="buyer">buyer </option>
   <option value="seller">seller</option>
 </select>
+
 <button type="submit">submit</button>
 </form>
