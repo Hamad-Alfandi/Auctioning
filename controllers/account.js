@@ -1,7 +1,9 @@
 const Seller = require("../models/seller")
 
 async function show(req, res) {
-  const seller = res.render("account/show", { title: "Account", Seller })
+  const sellers = await Seller.find({})
+
+  res.render("account/show", { title: "Account", sellers })
 }
 //   let roleId = req.cookies["roleID"]
 

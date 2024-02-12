@@ -2,6 +2,7 @@
 <%  if (user && user.role === 'seller') { %>
 <h1>Seller name: <%= user.name %> </h1>
 <h2>reviews:</h2>
+
 <h2>Products:</h2>
 
 
@@ -11,5 +12,21 @@
 <%  if (user && user.role === 'buyer') { %>
   <h1>buyer name: <%= user.name %> </h1>
   <h2>Products</h2>
+
+<form action="/reviews<%= user._id %>" method="post">
+ 
+  <textarea name="description" ></textarea>
+  <input type="radio" name='reviewRate' value="1">1
+  <input type="radio" name='reviewRate' value="2">2
+  <input type="radio" name='reviewRate' value="3">3
+  <input type="radio" name='reviewRate' value="4">4 
+  <input type="radio" name='reviewRate' value="5">5
+ <select name="seller_id">
+  <%sellers.forEach((s) => {%>
+    <option value="s._id"><%= s.name%></option>
+  <%})%>
+ </select>
+</form>
+
   <%}%>
 <%- include('../partials/footer') %>
