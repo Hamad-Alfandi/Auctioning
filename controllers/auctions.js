@@ -45,15 +45,15 @@ async function showAuction(req, res) {
 async function showAuctions(req, res) {
   //TEMPORARY COOKIE UNTIL LOG IN CODED
   /////////////////////////////////////////////////////////////////////////////////////////////////
-  res.cookie('userEmailCookie', 'yas@something.com', {
+  res.cookie('userEmailCookie', 'kamal@something.com', {
     expires: new Date(Date.now() + 900000),
     httpOnly: true
   })
-  res.cookie('userType', 'Seller', {
+  res.cookie('userType', 'Buyer', {
     expires: new Date(Date.now() + 900000),
     httpOnly: true
   })
-  res.cookie('userIdCookie', '65c755919487889fde5c20ac', {
+  res.cookie('userIdCookie', '65c9fee133f292736d3e7f7f', {
     expires: new Date(Date.now() + 900000),
     httpOnly: true
   })
