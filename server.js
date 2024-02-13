@@ -1,4 +1,3 @@
-
 var createError = require("http-errors")
 var express = require("express")
 var path = require("path")
@@ -19,6 +18,7 @@ var auctionRouter = require("./routes/auction")
 var accountRouter = require("./routes/account")
 const usersRouter = require("./routes/users")
 
+
 var app = express()
 
 // view engine setup
@@ -30,6 +30,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser('secret')) //CHANGE THIS WHEN LOGIN MODIFIED
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(methodOverride('_method'))
 app.use(
   session({
     secret: process.env.SECRET,
