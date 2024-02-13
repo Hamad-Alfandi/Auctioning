@@ -47,7 +47,7 @@
       border-radius: 5px;
       cursor: pointer;
     }
-    
+
     .search-results {
       margin-top: 20px;
     }
@@ -75,21 +75,14 @@
 
   <div class="search-results" id="searchResults"></div>
 
-
-
-
-
-
-
   <% let categories2=['Home Living', 'Clothing' , 'Bags' , 'Jewelry' , 'Beauty' , 'Collectibles' , 'Art' , 'Books'
-    , 'Other' ]; categories2.forEach(e=>{
-    %> <a href="../categories/<%=e%>">
+    , 'Other' ]; categories2.forEach(e=>{ %>
+    <a href="../categories/<%=e%>">
       <%=e%>
     </a>
     <% }) %>
 
       <div id="categoryContainer"></div>
-
 
       <script>
         function submitSearchForm() {
