@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+
 const userSchema = new Schema(
   {
     name: String,
@@ -14,6 +15,7 @@ const userSchema = new Schema(
     sellerId: { type: Schema.Types.ObjectId, ref: 'Seller' },
     buyerId: { type: Schema.Types.ObjectId, ref: 'Buyer' }
   },
+
   {
     timestamps: true
   }

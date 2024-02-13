@@ -1,18 +1,20 @@
-const User = require('../models/user')
-const Seller = require('../models/seller')
-const Buyer = require('../models/buyer')
-const { ObjectId } = require('mongodb')
+
+const User = require("../models/user")
+const Seller = require("../models/seller")
+const Buyer = require("../models/buyer")
+const { ObjectId } = require("mongodb")
 
 // function that update user role & register
 const update = async (req, res) => {
   const user = await User.findById(req.params.id)
   const convertedId = new ObjectId(req.params.id)
+
   user.role = req.body.role
   user.register = true
   let roleCollectionObj = {}
-  if (user.role === 'seller') {
+  if (user.role === "seller") {
     const sellerCollec = await Seller.findOne({
-      userId: convertedId
+      userId: convertedId,
     })
     if (sellerCollec) {
       user.sellerId = sellerCollec._id
@@ -22,9 +24,9 @@ const update = async (req, res) => {
       roleCollectionObj.name = user.name
       Seller.insertMany(roleCollectionObj)
     }
-  } else if (user.role === 'buyer') {
+  } else if (user.role === "buyer") {
     const buyerCollec = await Buyer.findOne({
-      userId: convertedId
+      userId: convertedId,
     })
     if (buyerCollec) {
       user.buyerId = buyerCollec._id
@@ -37,8 +39,8 @@ const update = async (req, res) => {
   }
   await user.save()
 
-  res.redirect('/auctioning')
+  res.redirect("/auctioning")
 }
 module.exports = {
-  update
+  update,
 }

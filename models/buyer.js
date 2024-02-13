@@ -1,29 +1,30 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const buyerSchema = new Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     userId: {
       type: Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
-      ref: 'User'
+      ref: "User",
     },
 
     email: String,
     reviews: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Review'
-      }
-    ]
+        ref: "Review",
+      },
+    ],
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 )
 
-module.exports = mongoose.model('Buyer', buyerSchema)
+module.exports = mongoose.model("Buyer", buyerSchema)
