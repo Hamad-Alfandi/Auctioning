@@ -13,7 +13,7 @@ const auctionSchema = new Schema(
       required: true
     },
     startingBid: {
-      type: String, //change to number
+      type: Number,
       required: true
     },
     highestBid: Number,

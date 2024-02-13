@@ -1,42 +1,147 @@
 <%- include('../partials/header') %>
 <h1>Add Auction</h1>
-<form method="POST" action="/auction">
-  <label>Product Name
-    <br>
-    <input type="text" placeholder="name" name="name">
-  </label><br>
-  <label>Description
-    <br>
-    <input type="textarea" placeholder="Description" name="description">
-  </label><br>
-  <label>Image File
-    <br>
-    <input type="text" placeholder="image" name="image">
-  </label><br>
-  <label>Category
-    <br>
-    <select name="category">
-      <option value="Home Living">Home Living</option>
-    <option value="Clothing">Clothing</option>
-      <option value="Bags">Bags</option>
-      <option value="Jewelry">Jewelry</option>
-      <option value="Beauty">Beauty</option>
-      <option value="Collectibles">Collectibles</option>
-      <option value="Art">Art</option>
-      <option value="Books">Books</option>
-      <option value="Other">Other</option>
-    </select>
-  </label><br>
-  <label>Auction End Date
-    <br>
-    <input type="date" name="endDate">
-  </label><br>
-  <label>Starting Bid
-    <br>
-    <input type="text" placeholder="Starting Bid" name="startingBid">
-  </label><br>
-  <button type="submit" class="add-auction">Add Auction</button>
-</form>
+<!-- <form method="POST" action="/auction" id="addAuctionForm"> -->
+  <form id="addAuctionForm" method="POST" action="/auction">
+    <label>Product Name<br>
+      <input type="text" placeholder="name" name="name" required>
+      <div class="error" id="nameError" style="display: none; color: red;"></div>
+    </label><br>
+  
+    <label>Description<br>
+      <textarea name="description" placeholder="Description" rows="5" cols="20" required></textarea>
+      <div class="error" id="descriptionError" style="display: none; color: red;"></div>
+    </label><br>
+  
+    <label>Image File<br>
+      <input type="file" placeholder="image" name="image" required>
+      <div class="error" id="imageError" style="display: none; color: red;"></div>
+    </label><br>
+  
+    <label>Category<br>
+      <select name="category" required>
+        <option value="Home Living">Home Living</option>
+        <option value="Clothing">Clothing</option>
+        <option value="Bags">Bags</option>
+        <option value="Jewelry">Jewelry</option>
+        <option value="Beauty">Beauty</option>
+        <option value="Collectibles">Collectibles</option>
+        <option value="Art">Art</option>
+        <option value="Books">Books</option>
+        <option value="Other">Other</option>
+      </select>
+      <div class="error" id="categoryError" style="display: none; color: red;"></div>
+    </label><br>
+  
+    <label>Auction End Date<br>
+      <input type="date" name="endDate" required>
+      <div class="error" id="endDateError" style="display: none; color: red;"></div>
+    </label><br>
+  
+    <label>Starting Bid<br>
+      <input type="text" placeholder="Starting Bid" name="startingBid" required>
+      <div class="error" id="startingBidError" style="display: none; color: red;"></div>
+    </label><br>
+  
+    <button type="submit" class="add-auction" id="submitButton">Add Auction</button>
+  </form>
+<script>
+let form = document.getElementById('addAuctionForm');
+  let submitButton = document.getElementById('submitButton');
+  let errorBoxes = {
+    name: document.getElementById('nameError'),
+    description: document.getElementById('descriptionError'),
+    image: document.getElementById('imageError'),
+    endDate: document.getElementById('endDateError'),
+    startingBid: document.getElementById('startingBidError'),
+    category: document.getElementById('categoryError')
+  };
+  
+  let nameInput = form.elements['name'];
+  let descriptionInput = form.elements['description'];
+  let imageInput = form.elements['image'];
+  let endDateInput = form.elements['endDate'];
+  let startingBidInput = form.elements['startingBid'];
+  let categoryInput = form.elements['category'];
+
+  
+  let nameRegex = /^[a-zA-Z0-9\s]+$/;
+  let startingBidRegex = /^[1-9]\d*(\.\d+)?$/;
+  
+
+  const  showError=(inputName, errorMessage) =>{
+    submitButton.disabled=true
+    errorBoxes[inputName].textContent = errorMessage;
+    errorBoxes[inputName].style.display = 'block';
+  }
+  
+  const hideError=(inputName)=> {
+    submitButton.disabled=false
+    errorBoxes[inputName].textContent = '';
+    errorBoxes[inputName].style.display = 'none';
+  }
+  const validateInput=(inputName) =>{
+    hideError(inputName);
+  
+    switch (inputName) {
+      case 'name':
+        if (!nameRegex.test(nameInput.value)) {
+          showError('name', 'Invalid Product Name! Please enter a valid name.');
+        }
+        break;
+      case 'description':
+        if (descriptionInput.value.trim() === '') {
+          showError('description', 'Description is required!');
+        }
+        break;
+      case 'image':
+        if (imageInput.value === '') {
+          showError('image', 'Image is required!');
+        }
+        break;
+      case 'endDate':
+        if (endDateInput.value === '') {
+          showError('endDate', 'Auction End Date is required!');
+        }
+        break;
+      case 'startingBid':
+        let startingBid = startingBidInput.value;
+        if (startingBid && !startingBidRegex.test(startingBid)) {
+          showError('startingBid', 'Invalid Starting Bid! Please enter a valid starting bid.');
+        }
+        break;
+      case 'category':
+        if (categoryInput.value === '') {
+          showError('category', 'Category is required!');
+        }
+        break;
+    }
+  }
+  
+
+  nameInput.addEventListener('input', function () {
+    validateInput('name');
+  });
+  
+  descriptionInput.addEventListener('input', function () {
+    validateInput('description');
+  });
+  
+  imageInput.addEventListener('input', function () {
+    validateInput('image');
+  });
+  
+  endDateInput.addEventListener('input', function () {
+    validateInput('endDate');
+  });
+  
+  startingBidInput.addEventListener('input', function () {
+    validateInput('startingBid');
+  });
+  
+  categoryInput.addEventListener('input', function () {
+    validateInput('category');
+  });
+</script>
 <%- include('../partials/footer') %>
 
 
@@ -45,11 +150,3 @@
 
 
 
-
-
-
-
-
-
-
-<%- include('../partials/footer') %>
