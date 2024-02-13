@@ -6,15 +6,36 @@ const passport = require("passport")
 
 const { ObjectId } = require('mongodb')
 function newAuction(req, res) {
-  let userType = req.cookies["userType"]
-  console.log("hi")
-  res.render("auction/new", { title: "Add auction", errorMsg: "", userType })
+  let userType = req.cookies['userType']
+  let userId = req.cookies['userIdCookie']
+  res.render('auction/new', {
+    title: 'Add auction',
+    userId,
+    errorMsg: '',
+    userType
+  })
+}
+
+async function updateBid(req, res) {
+  let userId = req.cookies['userIdCookie']
+  let auctionId = req.params.Auctionid
+  const update = { highestBid: req.body.bidPrice, buyer_id: userId }
+  try {
+    await Auction.findOneAndUpdate(
+      { _id: auctionId },
+      { $set: update },
+      { new: true }
+    )
+  } catch (error) {
+    console.log(`error:${error}`)
+  }
+
+  res.redirect(`/auctioning`)
 }
 
 async function showAuction(req, res) {
   let userType = req.cookies['userType']
   let userId = req.cookies['userIdCookie']
-  // console.log('paraaaaaams:')
   let productId = req.params.Productid
   const productDetails = await Product.findOne({ _id: productId })
 
@@ -31,10 +52,6 @@ async function showAuction(req, res) {
   const sellerDetails = await Seller.findOne({
     _id: sellerId
   })
-
-  console.log(`the product: ${productDetails}`)
-  console.log(`the auction: ${auctionDetails}`)
-  console.log(`the seller: ${sellerDetails}`)
 
   res.render('auction/auctionDetails', {
     title: 'Auction Details',
@@ -65,7 +82,7 @@ async function showAuctions(req, res) {
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
   let userType = req.cookies['userType']
-
+  let userId = req.cookies['userIdCookie']
   const recentProducts = await Product.aggregate([
     {
       $lookup: {
@@ -76,7 +93,13 @@ async function showAuctions(req, res) {
       },
     },
   ]).sort({ createdAt: -1 })
-  res.render("auctioning/show", { title: "Home", userType, recentProducts })
+
+  res.render('auctioning/show', {
+    title: 'Home',
+    userType,
+    userId,
+    recentProducts
+  })
 }
 
 async function addAuction(req, res) {
@@ -107,7 +130,7 @@ module.exports = {
   newAuction,
   addAuction,
   showAuctions,
-
-  showAuction
+  showAuction,
+  updateBid
 
 }
