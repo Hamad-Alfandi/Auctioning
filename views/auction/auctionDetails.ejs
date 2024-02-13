@@ -5,11 +5,15 @@
 <h4>Time Left to Bid: <%=auctionDetails.endDate%></h4>
 </div>
 <div class="productDetailRightDiv">
+  <%if(belongToUser){%>
+    <h1>belongs to user</h1>
+    <%}%>
   <div class="biddingDiv">
-    
+    <!-- <h1><%=belongToUser%></h1> -->
   <%if(auctionDetails.highestBid){%>
   <h2>
-Current Highest Bid: </h2>
+Current Highest Bid:
+ </h2>
 <h3><%=auctionDetails.highestBid%>
   </h3>
   <%}else{%>
@@ -17,7 +21,7 @@ Current Highest Bid: </h2>
     <h3><%=auctionDetails.startingBid%>
     <%}%>
   <!-- CHANGE ONCE ACCOUNT LOGIN SETTLED -->
-  <%if(userType&&userType==='Buyer'){%>
+  <%if(user&&user.role==='buyer'){%>
     <h2>Bid:</h2>
    <form action="../auction/bid/<%=auctionDetails._id%>?_method=PUT" method="POST" autocomplete="off">
     <input type="text" placeholder="Bid" name="bidPrice" id="bidPriceInput"><label> BHD</label>
@@ -36,9 +40,11 @@ Current Highest Bid: </h2>
   </div>
 </div>
 </div>
-<!-- productDetails,
-auctionDetails,
-sellerDetails -->
+
+
+
+
+
 <script>
   // for REGEX Validation
   document.addEventListener('DOMContentLoaded', function() {
