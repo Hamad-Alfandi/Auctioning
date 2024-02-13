@@ -17,7 +17,7 @@ Current Highest Bid: </h2>
     <h3><%=auctionDetails.startingBid%>
     <%}%>
   <!-- CHANGE ONCE ACCOUNT LOGIN SETTLED -->
-  <%if(userType&&userType==='Buyer'){%>
+  <%if(userType&&userType==='buyer'){%>
     <h2>Bid:</h2>
    <form action="../auction/bid/<%=auctionDetails._id%>?_method=PUT" method="POST" autocomplete="off">
     <input type="text" placeholder="Bid" name="bidPrice" id="bidPriceInput"><label> BHD</label>
@@ -36,9 +36,6 @@ Current Highest Bid: </h2>
   </div>
 </div>
 </div>
-<!-- productDetails,
-auctionDetails,
-sellerDetails -->
 <script>
   // for REGEX Validation
   document.addEventListener('DOMContentLoaded', function() {
