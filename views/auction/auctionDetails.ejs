@@ -1,25 +1,29 @@
 <%- include('../partials/header') %>
-<h1><%=productDetails.name%> details</h1>
+<h1><%=productDetails.name%></h1>
 <div class="productDetails">
 <div class="productDetailLeftDiv"><img src="https://www.dior.com/couture/ecommerce/media/catalog/product/9/Q/1699371916_M0565ONGE_M900_E01_GH.jpg" alt="<%=productDetails.name%>" style="width: 400px;">
 <h4>Time Left to Bid: <%=auctionDetails.endDate%></h4>
 </div>
 <div class="productDetailRightDiv">
   <div class="biddingDiv">
-  <%if(auctionDetails.currentBid){%>
+    
+  <%if(auctionDetails.highestBid){%>
   <h2>
 Current Highest Bid: </h2>
-<h3><%=auctionDetails.currentBid%>
+<h3><%=auctionDetails.highestBid%>
   </h3>
-  <%}%>
+  <%}else{%>
+    <h2>Starting Bid:</h2>
+    <h3><%=auctionDetails.startingBid%>
+    <%}%>
   <!-- CHANGE ONCE ACCOUNT LOGIN SETTLED -->
   <%if(userType&&userType==='Buyer'){%>
     <h2>Bid:</h2>
-   <form action="../account/<%=userId%>" method="POST">
-    
-    <input type="text" placeholder="Bid"><label> BHD</label>
-    <button type="submit" class="add-bid">Bid</button>
+   <form action="../auction/bid/<%=auctionDetails._id%>?_method=PUT" method="POST" autocomplete="off">
+    <input type="text" placeholder="Bid" name="bidPrice" id="bidPriceInput"><label> BHD</label>
+    <button type="submit" class="add-bid" id="submitButton" disabled>Bid</button>
    </form> 
+   <div id="errorMessage" style="display: none; color: red;"></div>
     <%}%>
   </div>
   <div class="detailsDiv">
@@ -35,5 +39,38 @@ Current Highest Bid: </h2>
 <!-- productDetails,
 auctionDetails,
 sellerDetails -->
+<script>
+  // for REGEX Validation
+  document.addEventListener('DOMContentLoaded', function() {
+  let numberInput = document.getElementById('bidPriceInput');
+  let submitButton = document.getElementById('submitButton');
+  let errorMessage = document.getElementById('errorMessage');
 
+  numberInput.addEventListener('input', function(event) {
+    let inputValue = numberInput.value;
+    let numberRegex = /^\d+(\.\d+)?$/;
+
+    let isValidNumber = numberRegex.test(inputValue)
+    let parsedInputValue = parseFloat(inputValue)
+    let parsedStartingBid = parseFloat('<%=auctionDetails.startingBid%>')
+
+    // if highest bid is greater than starting bid (there is a bid)
+    if ('<%=auctionDetails.highestBid%>') {
+      // set the starting bid to the highest (latest) bid
+      parsedStartingBid = parseFloat('<%=auctionDetails.highestBid%>')
+    }
+
+    if (isValidNumber && (parsedInputValue > parsedStartingBid)) {
+    
+    // if ((numberRegex.test(inputValue)&&parseFloat(inputValue)>parseFloat('<%=auctionDetails.startingBid%>'))||(numberRegex.test(inputValue)&&parseFloat(inputValue)>parseFloat('<%=auctionDetails.startingBid%>')&&'<%=auctionDetails.highestBid%>'&& parseFloat(inputValue)>parseFloat('<%=auctionDetails.highestBid%>'))) {
+      submitButton.disabled = false;
+      errorMessage.style.display = 'none';
+    } else {
+      submitButton.disabled = true;
+      errorMessage.style.display = 'block';
+      errorMessage.textContent = 'Invalid! Ensure it is a number higher than the current or starting bid.';
+    }
+  });
+});
+</script>
 <%- include('../partials/footer') %>

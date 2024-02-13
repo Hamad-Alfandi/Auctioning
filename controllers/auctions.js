@@ -5,13 +5,35 @@ const Seller = require('../models/seller')
 const { ObjectId } = require('mongodb')
 function newAuction(req, res) {
   let userType = req.cookies['userType']
-  console.log('hi')
-  res.render('auction/new', { title: 'Add auction', errorMsg: '', userType })
+  let userId = req.cookies['userIdCookie']
+  res.render('auction/new', {
+    title: 'Add auction',
+    userId,
+    errorMsg: '',
+    userType
+  })
 }
+
+async function updateBid(req, res) {
+  let userId = req.cookies['userIdCookie']
+  let auctionId = req.params.Auctionid
+  const update = { highestBid: req.body.bidPrice, buyer_id: userId }
+  try {
+    await Auction.findOneAndUpdate(
+      { _id: auctionId },
+      { $set: update },
+      { new: true }
+    )
+  } catch (error) {
+    console.log(`error:${error}`)
+  }
+
+  res.redirect(`/auctioning`)
+}
+
 async function showAuction(req, res) {
   let userType = req.cookies['userType']
   let userId = req.cookies['userIdCookie']
-  // console.log('paraaaaaams:')
   let productId = req.params.Productid
   const productDetails = await Product.findOne({ _id: productId })
 
@@ -29,10 +51,6 @@ async function showAuction(req, res) {
     _id: sellerId
   })
 
-  console.log(`the product: ${productDetails}`)
-  console.log(`the auction: ${auctionDetails}`)
-  console.log(`the seller: ${sellerDetails}`)
-
   res.render('auction/auctionDetails', {
     title: 'Auction Details',
     userType,
@@ -45,21 +63,21 @@ async function showAuction(req, res) {
 async function showAuctions(req, res) {
   //TEMPORARY COOKIE UNTIL LOG IN CODED
   /////////////////////////////////////////////////////////////////////////////////////////////////
-  res.cookie('userEmailCookie', 'kamal@something.com', {
+  res.cookie('userEmailCookie', 'yas@something.com', {
     expires: new Date(Date.now() + 900000),
     httpOnly: true
   })
-  res.cookie('userType', 'Buyer', {
+  res.cookie('userType', 'Seller', {
     expires: new Date(Date.now() + 900000),
     httpOnly: true
   })
-  res.cookie('userIdCookie', '65c9fee133f292736d3e7f7f', {
+  res.cookie('userIdCookie', '65c755919487889fde5c20ac', {
     expires: new Date(Date.now() + 900000),
     httpOnly: true
   })
   /////////////////////////////////////////////////////////////////////////////////////////////////
   let userType = req.cookies['userType']
-
+  let userId = req.cookies['userIdCookie']
   const recentProducts = await Product.aggregate([
     {
       $lookup: {
@@ -70,7 +88,12 @@ async function showAuctions(req, res) {
       }
     }
   ]).sort({ createdAt: -1 })
-  res.render('auctioning/show', { title: 'Home', userType, recentProducts })
+  res.render('auctioning/show', {
+    title: 'Home',
+    userType,
+    userId,
+    recentProducts
+  })
 }
 async function addAuction(req, res) {
   let productObj = {}
@@ -98,5 +121,6 @@ module.exports = {
   newAuction,
   addAuction,
   showAuctions,
-  showAuction
+  showAuction,
+  updateBid
 }

@@ -13,7 +13,7 @@
         <%if(userType==='Seller'){%>
         <a href="/auction">Add Auction</a>
         <%}}%>
-        <a href="/account">Account</a>
+        <a href="/account/<%=userId%>">Account</a>
         <%  if(!userType) { %>
         <a href="/account/signIn">Sign in</a>
         
