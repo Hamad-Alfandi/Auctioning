@@ -1,3 +1,66 @@
 <%- include('../partials/header') %>
-<h1>Page to view All Categories</h1>
-<%- include('../partials/footer') %>`
+
+  <style>
+    .database-entry {
+      display: flex;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .entry-image {
+      max-width: 100px;
+      max-height: 100px;
+      margin-right: 10px;
+    }
+
+    .entry-details {
+      flex-grow: 1;
+    }
+
+    .category {
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+
+  <h1>Page to view All Categories</h1>
+
+  <script>
+    // JavaScript array containing categories
+    let categories2 = ['Home Living', 'Clothing', 'Bags', 'Jewelry', 'Beauty', 'Collectibles', 'Art', 'Books', 'Other'];
+
+// Function to create HTML elements for categories
+function createCategoryElements() {
+    let categoryContainer = document.getElementById('categoryContainer');
+
+    categories2.forEach(function(category) {
+        let categoryElement = document.createElement('div');
+        categoryElement.className = 'category';
+        categoryElement.textContent = category;
+        categoryElement.onclick = function() {
+            // You can add navigation logic here, e.g., window.location.href = 'categoryPage.html?category=' + encodeURIComponent(category);
+            window.location.href = '/categories/' + encodeURIComponent(category);
+
+        };
+
+        categoryContainer.appendChild(categoryElement);
+    });
+}
+
+// Ensure the script runs after the HTML has loaded
+document.addEventListener('DOMContentLoaded', createCategoryElements);
+
+
+     // Function to navigate to another page based on the category name
+     function navigateToCategory(categoryName) {
+      // Navigate to another page based on the category (replace with actual page URL)
+      window.location.href = 'categoryPage.html?category=' + encodeURIComponent(categoryName);
+    }
+  </script>
+  <div id="categoryContainer"></div>
+  <%- include('../partials/footer') %>
+

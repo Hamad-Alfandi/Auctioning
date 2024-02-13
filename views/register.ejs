@@ -1,0 +1,8 @@
+<!-- form with dropdown and submit button -->
+<form action="/users/<%= user._id %>?_method=put" method="POST">
+<select name="role" >
+  <option value="buyer">buyer </option>
+  <option value="seller">seller</option>
+</select>
+<button type="submit">submit</button>
+</form>
