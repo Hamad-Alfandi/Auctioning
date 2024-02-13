@@ -14,7 +14,7 @@ const update = async (req, res) => {
       userId: convertedId
     })
     if (sellerCollec) {
-      user['roleId'] = sellerCollec._id
+      user.sellerId = sellerCollec._id
     } else {
       roleCollectionObj = {}
       roleCollectionObj.userId = user._id
@@ -26,12 +26,8 @@ const update = async (req, res) => {
       userId: convertedId
     })
     if (buyerCollec) {
-      console.log('buyer exists')
-      console.log(buyerCollec)
-      user['roleId'] = buyerCollec._id
+      user.buyerId = buyerCollec._id
     } else {
-      console.log('buyer not exists')
-
       roleCollectionObj = {}
       roleCollectionObj.userId = user._id
       roleCollectionObj.name = user.name
@@ -39,6 +35,7 @@ const update = async (req, res) => {
     }
   }
   await user.save()
+
   res.redirect('/auctioning')
 }
 module.exports = {
