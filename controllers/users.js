@@ -1,7 +1,9 @@
+
 const User = require("../models/user")
 const Seller = require("../models/seller")
 const Buyer = require("../models/buyer")
 const { ObjectId } = require("mongodb")
+
 // function that update user role & register
 const update = async (req, res) => {
   const user = await User.findById(req.params.id)

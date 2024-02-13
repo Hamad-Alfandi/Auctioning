@@ -1,0 +1,44 @@
+<%- include('../partials/header') %>
+  <form id="addAuctionForm" method="POST" action="/auction/<%=productDetails._id%>?_method=PUT"">
+    <label>Product Name<br>
+      <input type="text" placeholder="name" name="name" required value="<%=productDetails.name%>">
+      <div class="error" id="nameError" style="display: none; color: red;"></div>
+    </label><br>
+  
+    <label>Description<br>
+      <textarea name="description" placeholder="Description" rows="5" cols="20" required ><%=productDetails.description%></textarea>
+      <div class="error" id="descriptionError" style="display: none; color: red;"></div>
+    </label><br>
+  
+    <label>Image File<br>
+      <input type="file" placeholder="image" name="image" required >
+      <div class="error" id="imageError" style="display: none; color: red;"></div>
+    </label><br>
+  
+    <label>Category<br>
+      <select name="category" required value="<%=auctionDetails.name%>">
+        <option value="Home Living">Home Living</option>
+        <option value="Clothing">Clothing</option>
+        <option value="Bags">Bags</option>
+        <option value="Jewelry">Jewelry</option>
+        <option value="Beauty">Beauty</option>
+        <option value="Collectibles">Collectibles</option>
+        <option value="Art">Art</option>
+        <option value="Books">Books</option>
+        <option value="Other">Other</option>
+      </select>
+      <div class="error" id="categoryError" style="display: none; color: red;"></div>
+    </label><br>
+  
+    <label>Auction End Date<br>
+      <input type="date" name="endDate" required ="<%=auctionDetails.endDate%>">
+      <div class="error" id="endDateError" style="display: none; color: red;"></div>
+    </label><br>
+  
+    <label>Starting Bid<br>
+      <input type="text" placeholder="Starting Bid" name="startingBid" required value="<%=auctionDetails.startingBid%>">
+      <div class="error" id="startingBidError" style="display: none; color: red;"></div>
+    </label><br>
+    <button type="submit" class="update-auction" id="submitButton">Update Auction</button>
+  </form>
+<%- include('../partials/footer') %>

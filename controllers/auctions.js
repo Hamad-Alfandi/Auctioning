@@ -1,9 +1,15 @@
+
 const Auction = require("../models/auction")
 const Product = require("../models/product")
 const Seller = require("../models/seller")
 const passport = require("passport")
 
 const { ObjectId } = require("mongodb")
+
+
+const auction = require('../models/auction')
+
+
 function newAuction(req, res) {
   let userType
   let userId
@@ -164,6 +170,79 @@ async function addAuction(req, res) {
   }
   res.redirect(`/auctioning`)
 }
+async function edit(req, res) {
+  let productId = req.params.Productid
+  const productDetails = await Product.findOne({ _id: productId })
+
+  let auctionId = productDetails.auction_id
+  const auctionDetails = await Auction.findOne({
+    _id: auctionId
+  })
+  let sellerId = auctionDetails.seller_id
+  let title = 'Update Auction'
+  res.render('auction/edit', {
+    title,
+    productDetails,
+    auctionDetails,
+    sellerId
+  })
+}
+async function updateAuction(req, res) {
+  let userId
+  if (req.user) {
+    userId = req.user.sellerId
+  } else {
+    userId = null
+  }
+  let productObj = {}
+  let auctionObj = {}
+  productObj['name'] = req.body.name
+  productObj['description'] = req.body.description
+  productObj['image'] = req.body.image
+
+  auctionObj['category'] = req.body.category
+  auctionObj['seller_id'] = userId
+  auctionObj['endDate'] = req.body.endDate
+  auctionObj['startingBid'] = req.body.startingBid
+  console.log(productObj)
+  console.log(auctionObj)
+  const productIdObject = new ObjectId(req.params.Productid)
+  try {
+    await Product.updateOne(
+      { _id: productIdObject },
+      {
+        $set: productObj
+      }
+    )
+    let product = await Product.findById(req.params.Productid)
+    console.log(`the product: ${product}`)
+    let auctionId = new ObjectId(product.auction_id)
+    await Auction.updateOne(
+      { _id: auctionId },
+      {
+        $set: auctionObj
+      }
+    )
+  } catch (err) {
+    console.log(err)
+  }
+  res.redirect(`/auctioning`)
+}
+
+async function deleteAuction(req, res) {
+  let product = await Product.findById(req.params.Productid)
+  console.log(`the product: ${product}`)
+  let productId = new ObjectId(req.params.Productid)
+  let auctionId = new ObjectId(product.auction_id)
+  try {
+    await Auction.deleteOne(auctionId)
+    await Product.deleteOne(productId)
+  } catch (error) {
+    console.log(error)
+  }
+
+  res.redirect(`/auctioning`)
+}
 
 module.exports = {
   newAuction,
@@ -171,4 +250,9 @@ module.exports = {
   showAuctions,
   showAuction,
   updateBid,
+
+  edit,
+  updateAuction,
+  deleteAuction
+
 }
