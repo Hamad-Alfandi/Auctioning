@@ -56,8 +56,28 @@ nav {
   justify-content: space-between;
   height: auto;
 }
-.mainAuctionsDiv,
+/* .mainAuctionsDiv,
 .productDetails {
   display: flex;
   justify-content: space-around;
+} */
+.auctionsContainerDiv {
+  padding: 10px;
+  background-color: rgb(229, 229, 229);
+}
+.mainAuctionsDiv {
+  border-radius: 6px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  height: 450px;
+  background-color: rgb(229, 229, 229);
+  .auctionItemDiv {
+    border-bottom: 8px solid black;
+    margin: 10px;
+    width: 360px;
+    height: 420px;
+    background-color: rgb(255, 255, 255);
+    display: inline-block;
+  }
 }
