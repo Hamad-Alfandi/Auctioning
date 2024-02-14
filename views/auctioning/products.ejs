@@ -1,0 +1,21 @@
+<!-- auctioning/products.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products</title>
+</head>
+<body>
+
+    <h1>All Products</h1>
+
+    <ul>
+        <% products.forEach(product => { %>
+            <li><%= product.name %> - <%= product.description %> (Category: <%= product.category %>)</li>
+        <% }); %>
+    </ul>
+
+</body>
+</html>
