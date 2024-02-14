@@ -1,19 +1,35 @@
 <%- include('../partials/header') %>
 <%  if (user && user.role === 'seller') { %>
 <h1>Seller name: <%= user.name %> </h1>
-<h2>reviews:</h2>
-
-<h2>Products:</h2>
 
 
+<% if (reviews.length) { %>
+  <table>
+    <thead>
+      <tr>
+        <th>Review</th>
+        <th> Rating</th>
+      </tr>
+          
+      </thead>
+      <tbody>
+      <% reviews.forEach((s)=>{ %>
+        <tr>
+          <td><%= s.description %></td>
+          <td> <%= s.reviewRate %></td>
+        </tr>
+      <% }); %> 
+          </tbody>
+  </table>  
+<% } %>
 
 <%}%>
 
 <%  if (user && user.role === 'buyer') { %>
   <h1>buyer name: <%= user.name %> </h1>
-  <h2>Products</h2>
+  
 
-<form action="/reviews<%= user._id %>" method="post">
+<form action="/account/<%= user._id %>/reviews" method="post">
  
   <textarea name="description" ></textarea>
   <input type="radio" name='reviewRate' value="1">1
@@ -22,11 +38,39 @@
   <input type="radio" name='reviewRate' value="4">4 
   <input type="radio" name='reviewRate' value="5">5
  <select name="seller_id">
+  
   <%sellers.forEach((s) => {%>
-    <option value="s._id"><%= s.name%></option>
+    <option value="<%= s._id %>"><%= s.name%></option>
+    
+
   <%})%>
  </select>
-</form>
+ <input type="submit" value="Add review">
 
-  <%}%>
+</form>
+<% if (reviews.length) { %>
+  <table>
+    <thead>
+      <tr>
+        <th>Review</th>
+        <th> Rating</th>
+      </tr>
+          
+      </thead>
+      <tbody>
+      <% reviews.forEach((s)=>{ %>
+        <tr>
+          <td><%= s.description %></td>
+          <td> <%= s.reviewRate %></td>
+        </tr>
+      <% }); %> 
+          </tbody>
+  </table>  
+<% } %>
+
+<%}%>
+
+  
+  
+  
 <%- include('../partials/footer') %>

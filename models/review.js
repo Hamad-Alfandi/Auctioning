@@ -18,7 +18,6 @@ const reviewSchema = new Schema(
       ref: "Buyer",
       required: true,
     },
-    timeCreated: Date,
     description: {
       //text description from buyer as review
       type: String,

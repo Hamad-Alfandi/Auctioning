@@ -18,12 +18,15 @@ const sellerSchema = new Schema(
       type: Number, // average rating calculated in backend before updating
       default: 0
     },
-    reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
-    auctions: [{ type: Schema.Types.ObjectId, ref: 'Auction' }],
-    userID: {
+
+    reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }],
+    auctions: [{ type: Schema.Types.ObjectId, ref: "Auction" }],
+    userId: {
       type: Schema.Types.ObjectId,
-      ref: 'User'
-    }
+      required: true,
+      ref: "User",
+    },
+
   },
 
   {
