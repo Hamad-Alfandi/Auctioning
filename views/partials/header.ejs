@@ -7,25 +7,22 @@
   <body>
     <nav>
       
-      <a href="/auctioning">Home</a>
-      <a href="/categories">All Products</a>
-
+      <a href="/auctioning" class="navBarLinks">Home</a>
+      <a href="/categories" class="navBarLinks">All Products</a>
+      <div class="search-container">
+        <form class="search-form" id="searchForm" method="GET" action="/categories/search">
+          <input class="search-input" type="text" name="query" placeholder="Search products">
+          <button class="search-button" type="submit">Search</button>
+        </form>
+      </div>
        <%  if (user) { 
        if(user.role === 'seller'){%>
-         <a href="/auction">Add Auction</a>
+         <a href="/auction" class="navBarLinks">Add Auction</a>
          <% } %>
-         <a href="/account/<%= user._id %>">Account</a>
-      
-       <% } %>
-       <%  if (user && user.role === 'buyer') { %>
-         <a href="/account/<%= user._id %>">Account</a>
-      
-       <% } %>
-      <% if (!user) { %>
-      <a href="/auth/google" class="login">LOG IN&nbsp;<img src="https://i.imgur.com/FHjYyi0.png"></a>
-      <% } else { %>
-      <a  href="/logout">LOGOUT</a>
+         <a href="/account/<%= user._id %>" class="navBarLinks">Account</a>
+         <a  href="/logout" class="navBarLinks">Log Off</a>
+       <% } else { %>
+      <a href="/auth/google" class="login navBarLinks">Log In</a>
       <% } %>
-
     </nav>
     <main>
