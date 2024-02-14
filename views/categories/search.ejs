@@ -1,0 +1,12 @@
+<%- include('../partials/header') %>
+<% if (productsFound.length === 0) { %>
+  <p>No results found.</p>
+<% } else { %>
+  <%  productsFound.forEach((product) => {%>
+    <div class="productItemDiv">
+      <h3><%=product.name%></h3>
+      <a href="../auction/<%=product._id%>">See Details</a>
+    </div>
+  <%})%>
+<% } %>
+<%- include('../partials/footer') %>

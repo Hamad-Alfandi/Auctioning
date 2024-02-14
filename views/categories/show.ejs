@@ -48,51 +48,85 @@
       cursor: pointer;
     }
 
-    .search-results {
-      margin-top: 20px;
+    body {
+      font-family: 'Arial', sans-serif;
+      /* margin: 0; */
+      /* padding: 0; */
+      background-color: #f4f4f4;
     }
 
-    .result-item {
+    .search-container {
+      background-color: #999999;
       padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      margin-bottom: 5px;
-      background-color: #f9f9f9;
+      text-align: center;
+      border-radius: 10px;
     }
+
+    .search-form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .search-input {
+      padding: 8px;
+      margin-right: 5px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .search-button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: #577bc4;
+      color: white;
+      cursor: pointer;
+    }
+
+    .search-button:hover {
+      background-color: #2e5da8;
+    }
+
+    #categoryContainer {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    #categoryContainer a {
+      text-decoration: none;
+      color: #333;
+      padding: 10px 15px;
+      margin: 0 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+      transition: background-color 0.3s ease;
+    }
+
+    #categoryContainer a:hover {
+      background-color: #f0f0f0;
+    }
+    
   </style>
 
   <h1>Page to view All Categories</h1>
 
 
   <div class="search-container">
-    <form class="search-form" id="searchForm" method="GET">
-      <input class="search-input" type="text" name="query" placeholder="Search for products..."
-        oninput="updateSearchResults(this.value)">
-      <button class="search-button" type="button" onclick="submitSearchForm()">Search</button>
+    <form class="search-form" id="searchForm" method="GET" action="/categories/search">
+      <input class="search-input" type="text" name="query" placeholder="Search products">
+      <button class="search-button" type="submit">Search</button>
     </form>
   </div>
 
-
-  <div class="search-results" id="searchResults"></div>
-
-  <% let categories2=['Home Living', 'Clothing' , 'Bags' , 'Jewelry' , 'Beauty' , 'Collectibles' , 'Art' , 'Books'
-    , 'Other' ]; categories2.forEach(e=>{ %>
-    <a href="../categories/<%=e%>">
-      <%=e%>
-    </a>
-    <% }) %>
-
-      <div id="categoryContainer"></div>
-
-      <script>
-        function submitSearchForm() {
-          const searchQuery = document.getElementById('searchForm').elements.query.value;
-
-          // Construct the new URL with the search query
-          const newUrl = `/categories/search?query=${encodeURIComponent(searchQuery)}`;
-
-          // Redirect to the new URL
-          window.location.href = newUrl;
-        }</script>
-
-      <%- include('../partials/footer') %>
+  <div id="categoryContainer">
+    <% let categories2=['Home Living', 'Clothing' , 'Bags' , 'Jewelry' , 'Beauty' , 'Collectibles' , 'Art' , 'Books'
+      , 'Other' ]; categories2.forEach(e=>{ %>
+      <a href="../categories/<%=e%>">
+        <%=e%>
+      </a>
+      <% }) %>
+  </div>
+  <%- include('../partials/footer') %>
