@@ -1,5 +1,71 @@
 <%- include('../partials/header') %>
-  <h1>Select A Category</h1>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      /* margin: 0; */
+      /* padding: 0; */
+      background-color: #f4f4f4;
+    }
+
+    .search-container {
+      background-color: #999999;
+      padding: 10px;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    .search-form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .search-input {
+      padding: 8px;
+      margin-right: 5px;
+      border: none;
+      border-radius: 5px;
+      flex-grow: 1;
+    }
+
+    .search-button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: #577bc4;
+      color: white;
+      cursor: pointer;
+    }
+
+    .search-button:hover {
+      background-color: #2e5da8;
+    }
+
+    #categoryContainer {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    #categoryContainer a {
+      text-decoration: none;
+      color: #333;
+      padding: 10px 15px;
+      margin: 0 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+      /* transition: background-color 0.3s ease; */
+    }
+
+    #categoryContainer a:hover {
+      background-color: #f0f0f0;
+    }
+    
+  </style>
+
+  <h1>Page to view All Categories</h1>
+
 
   <div class="search-container">
     <form class="search-form" id="searchForm" method="GET" action="/categories/search">
@@ -8,11 +74,12 @@
     </form>
   </div>
 
-  <% let categories2=['Home Living', 'Clothing' , 'Bags' , 'Jewelry' , 'Beauty' , 'Collectibles' , 'Art' , 'Books'
-    , 'Other' ]; categories2.forEach(e=>{ %>
-    <a href="../categories/<%=e%>">
-      <%=e%>
-    </a>
-    <% }) %>
-      <div id="categoryContainer"></div>
-      <%- include('../partials/footer') %>
+  <div id="categoryContainer">
+    <% let categories2=['Home Living', 'Clothing' , 'Bags' , 'Jewelry' , 'Beauty' , 'Collectibles' , 'Art' , 'Books'
+      , 'Other' ]; categories2.forEach(e=>{ %>
+      <a href="../categories/<%=e%>">
+        <%=e%>
+      </a>
+      <% }) %>
+  </div>
+  <%- include('../partials/footer') %>
