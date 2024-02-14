@@ -1,24 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0 auto;
+  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00b7ff;
-}
+/* <div class="search-container">
+<form class="search-form" id="searchForm" method="GET" action="/categories/search">
+  <input class="search-input" type="text" name="query" placeholder="Search products">
+  <button class="search-button" type="submit">Search</button>
+</form> */
 
-.mainAuctionsDiv,
+.search-container {
+  padding: 20px;
+  flex-grow: 2;
+  justify-items: center;
+  align-items: center;
+}
+.search-form {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.search-input {
+  background-color: rgb(52, 52, 52);
+  font-family: 'Bodoni Moda', serif;
+  flex-grow: 1;
+  height: 30px;
+  border: none;
+  padding: 5px;
+}
+.search-button {
+  background-color: #ffc70e;
+  font-family: 'Bodoni Moda', serif;
+  border: none;
+}
+.navBarLinks {
+  padding: 20px;
+  color: #ffffff;
+  text-decoration: none;
+  text-align: center;
+  flex-grow: 1;
+  border-bottom: 5px solid #000000;
+}
+.navBarLinks:hover {
+  color: #ffc70e;
+  flex-grow: 1;
+  border-bottom: 5px solid #ffc70e;
+}
+nav {
+  background-color: rgb(0, 0, 0);
+  height: 70px;
+  font-size: 20px;
+  font-family: 'Bodoni Moda', serif;
+  font-style: normal;
+  display: flex;
+  justify-content: space-between;
+  height: auto;
+}
+/* .mainAuctionsDiv,
 .productDetails {
   display: flex;
   justify-content: space-around;
+} */
+.auctionsContainerDiv {
+  padding: 10px;
+  background-color: rgb(229, 229, 229);
 }
-.login {
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  height: 34px;
-}
-
-.login img {
-  height: 20px;
+.mainAuctionsDiv {
+  border-radius: 6px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  height: 450px;
+  background-color: rgb(229, 229, 229);
+  .auctionItemDiv {
+    border-bottom: 8px solid black;
+    margin: 10px;
+    width: 360px;
+    height: 420px;
+    background-color: rgb(255, 255, 255);
+    display: inline-block;
+  }
 }

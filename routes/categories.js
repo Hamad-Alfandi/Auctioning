@@ -1,15 +1,13 @@
-var express = require("express")
+var express = require('express')
 var router = express.Router()
-const Product = require("../models/product")
-const Category = require("../models/auction")
-const categoriesCtrl = require("../controllers/auctioning")
 
-/* GET home page. */
-router.get("/", async function (req, res, next) {
-  const categories = await Product.find({})
+const Product = require('../models/product')
+const Auction = require('../models/auction')
+const categorysCtrl = require('../controllers/categories')
 
-  // console.log(categories)
-  res.render("auctioning/categories", { title: "All Categories", categories })
-})
+router.get('/search', categorysCtrl.search)
+router.get('/', categorysCtrl.show)
+router.get('/:category', categorysCtrl.showCategory)
+
 
 module.exports = router
