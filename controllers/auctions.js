@@ -2,6 +2,7 @@ const Auction = require('../models/auction')
 const Product = require('../models/product')
 const Seller = require('../models/seller')
 const passport = require('passport')
+const s3 = require('../config/aws-config')
 const { ObjectId } = require('mongodb')
 const auction = require('../models/auction')
 
@@ -11,7 +12,6 @@ function newAuction(req, res) {
   if (req.user && req.user.role === 'seller') {
     userType = req.user.role
     userId = req.user.sellerId
-    console.log(`found a user, type is: ${userType} role id is ${userId}`)
   } else {
     userType = null
     userId = null
@@ -30,7 +30,6 @@ async function updateBid(req, res) {
   if (req.user && req.user.role === 'buyer') {
     userType = req.user.role
     userId = req.user.buyerId
-    console.log(`found a user, type is: ${userType} role id is ${userId}`)
   } else {
     userType = null
     userId = null
@@ -69,7 +68,7 @@ async function showAuction(req, res) {
     userType = req.user.role
     if (userType === 'seller') {
       userId = req.user.sellerId
-      console.log(`seller id: ${sellerId}   req seller id: ${userId}`)
+
       if (sellerId.toString() == userId) {
         belongToUser = true
       }
@@ -86,12 +85,21 @@ async function showAuction(req, res) {
   const sellerDetails = await Seller.findOne({
     _id: sellerId
   })
-
+  const currentTime = new Date()
+  const timeRemaining = auctionDetails.endDate - currentTime
+  // const timeLeft = formatTime(timeRemaining)
+  const hours = Math.floor(timeRemaining / (1000 * 60 * 60))
+  const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60))
+  const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000)
+  const timeLeft = `${hours.toString().padStart(2, '0')}:${minutes
+    .toString()
+    .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
   res.render('auction/auctionDetails', {
     title: 'Auction Details',
     userType,
     userId,
     belongToUser,
+    timeLeft,
     productDetails,
     auctionDetails,
     sellerDetails
@@ -99,7 +107,6 @@ async function showAuction(req, res) {
 }
 
 async function showAuctions(req, res) {
-  console.log(`the user:${req.user}`)
   let userType
   let userId
   if (req.user) {
@@ -109,7 +116,6 @@ async function showAuctions(req, res) {
     } else if (req.user.role === 'buyer') {
       userId = req.user.buyerId
     }
-    console.log(`found a user, type is: ${userType} role id is ${userId}`)
   } else {
     userType = null
     userId = null
@@ -122,8 +128,14 @@ async function showAuctions(req, res) {
         foreignField: '_id',
         as: 'auction'
       }
+    },
+    {
+      $sort: { createdAt: -1 }
+    },
+    {
+      $limit: 9
     }
-  ]).sort({ createdAt: -1 })
+  ])
 
   res.render('auctioning/show', {
     title: 'Home',
@@ -136,20 +148,28 @@ async function showAuctions(req, res) {
 async function addAuction(req, res) {
   let userId
   if (req.user) {
-    console.log(
-      `user found in add auction with role id of ${req.user.sellerId}`
-    )
     userId = req.user.sellerId
   } else {
     userId = null
-    console.log('no user found in add auction')
   }
+
   let productObj = {}
   let auctionObj = {}
+
+  let productImage = req.file
+  let imageURL
+  let s3Params = {
+    Bucket: 'eliteauctions-productimages',
+    Key: productImage.originalname,
+    Body: productImage.buffer
+  }
+
+  const data = await s3.upload(s3Params).promise()
+  imageURL = data.Location
+  productObj['image'] = imageURL.toString()
+
   productObj['name'] = req.body.name
   productObj['description'] = req.body.description
-  productObj['image'] = req.body.image
-
   auctionObj['category'] = req.body.category
   auctionObj['seller_id'] = userId
   auctionObj['endDate'] = req.body.endDate
@@ -198,8 +218,7 @@ async function updateAuction(req, res) {
   auctionObj['seller_id'] = userId
   auctionObj['endDate'] = req.body.endDate
   auctionObj['startingBid'] = req.body.startingBid
-  console.log(productObj)
-  console.log(auctionObj)
+
   const productIdObject = new ObjectId(req.params.Productid)
   try {
     await Product.updateOne(
@@ -209,7 +228,6 @@ async function updateAuction(req, res) {
       }
     )
     let product = await Product.findById(req.params.Productid)
-    console.log(`the product: ${product}`)
     let auctionId = new ObjectId(product.auction_id)
     await Auction.updateOne(
       { _id: auctionId },
@@ -225,7 +243,6 @@ async function updateAuction(req, res) {
 
 async function deleteAuction(req, res) {
   let product = await Product.findById(req.params.Productid)
-  console.log(`the product: ${product}`)
   let productId = new ObjectId(req.params.Productid)
   let auctionId = new ObjectId(product.auction_id)
   try {
