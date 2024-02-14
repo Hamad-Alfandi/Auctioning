@@ -1,17 +1,21 @@
 <!-- form with dropdown and submit button -->
 <style>
-  h2{
-    margin-top: 100px;
-   
-  }
-  button{
-    background-color: yellow;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Nanum+Myeongjo&display=swap');
+body {
+  display: flex;
+  justify-content: center;
+  background-color: #1a1a1a;
+  color: white;
+  margin: 0 auto;
+  font-family: 'Nanum Myeongjo', serif;
+  text-align: center;
+}
+
 </style>
 <form action="/users/<%= user._id %>?_method=put" method="POST">
 <h2> Continue as :</h2>
 
-  <select name="role" >
+  <select name="role">
   <option value="buyer">buyer </option>
   <option value="seller">seller</option>
 </select>

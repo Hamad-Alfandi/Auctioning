@@ -1,4 +1,5 @@
 <%- include('../partials/header') %>
+<div class="formContainerDiv">
   <form id="addAuctionForm" method="POST" action="/auction/<%=productDetails._id%>?_method=PUT">
     <label>Product Name<br>
       <input type="text" placeholder="name" name="name" required value="<%=productDetails.name%>">
@@ -8,11 +9,6 @@
     <label>Description<br>
       <textarea name="description" placeholder="Description" rows="5" cols="20" required ><%=productDetails.description%></textarea>
       <div class="error" id="descriptionError" style="display: none; color: red;"></div>
-    </label><br>
-  
-    <label>Image File<br>
-      <input type="file" placeholder="image" name="image" required >
-      <div class="error" id="imageError" style="display: none; color: red;"></div>
     </label><br>
   
     <label>Category<br>
@@ -41,4 +37,5 @@
     </label><br>
     <button type="submit" class="update-auction" id="submitButton">Update Auction</button>
   </form>
+</div>
 <%- include('../partials/footer') %>

@@ -1,37 +1,6 @@
 <%- include('../partials/header') %>
-  <style>
-    #categoryContainer {
-      display: flex;
-      justify-content: center;
-      margin: 20px 0;
-    }
 
-    #categoryContainer a {
-      text-decoration: none;
-      color: #333;
-      padding: 10px 15px;
-      margin: 0 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: #fff;
-      /* transition: background-color 0.3s ease; */
-    }
-
-    #categoryContainer a:hover {
-      background-color: #f0f0f0;
-    }
-    
-  </style>
-
-  <h1>Page to view All Categories</h1>
-
-
-  <!-- <div class="search-container">
-    <form class="search-form" id="searchForm" method="GET" action="/categories/search">
-      <input class="search-input" type="text" name="query" placeholder="Search products">
-      <button class="search-button" type="submit">Search</button>
-    </form>
-  </div> -->
+  <h1 class="pageHeader">Select a Category</h1>
 
   <div id="categoryContainer">
     <% let categories2=['Home Living', 'Clothing' , 'Bags' , 'Jewelry' , 'Beauty' , 'Collectibles' , 'Art' , 'Books'

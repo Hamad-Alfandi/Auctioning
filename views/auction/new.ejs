@@ -1,5 +1,6 @@
 <%- include('../partials/header') %>
 <h1>Add Auction</h1>
+<div class="formContainerDiv">
   <form id="addAuctionForm" method="POST" action="/auction" enctype="multipart/form-data">
     <label>Product Name<br>
       <input type="text" placeholder="name" name="name" required>
@@ -43,6 +44,7 @@
   
     <button type="submit" class="add-auction" id="submitButton">Add Auction</button>
   </form>
+</div>
 <script>
 let form = document.getElementById('addAuctionForm');
   let submitButton = document.getElementById('submitButton');
