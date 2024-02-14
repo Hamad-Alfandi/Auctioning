@@ -1,25 +1,25 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const Auction = require("../models/auction")
+const Auction = require('../models/auction')
 
 const productSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: true
     },
     auction_id: {
       type: Schema.Types.ObjectId,
-      ref: "Auction",
+      ref: 'Auction'
     },
     description: {
-      type: String,
+      type: String
     },
-    image: String,
+    image: String
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 )
 
-module.exports = mongoose.model("Product", productSchema)
+module.exports = mongoose.model('Product', productSchema)
