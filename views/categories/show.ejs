@@ -1,79 +1,12 @@
 <%- include('../partials/header') %>
-  <style>
-    .database-entry {
-      display: flex;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      padding: 10px;
-    }
-
-    .entry-image {
-      max-width: 100px;
-      max-height: 100px;
-      margin-right: 10px;
-    }
-
-    .entry-details {
-      flex-grow: 1;
-    }
-
-    .category {
-      margin: 10px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .search-container {
-      margin-bottom: 20px;
-    }
-
-    .search-form {
-      display: flex;
-    }
-
-    .search-input {
-      flex-grow: 1;
-      padding: 8px;
-      margin-right: 10px;
-    }
-
-    .search-button {
-      padding: 8px;
-      background-color: #4CAF50;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .search-results {
-      margin-top: 20px;
-    }
-
-    .result-item {
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      margin-bottom: 5px;
-      background-color: #f9f9f9;
-    }
-  </style>
-
-  <h1>Page to view All Categories</h1>
-
+  <h1>Select A Category</h1>
 
   <div class="search-container">
-    <form class="search-form" id="searchForm" method="GET">
-      <input class="search-input" type="text" name="query" placeholder="Search for products..."
-        oninput="updateSearchResults(this.value)">
-      <button class="search-button" type="button" onclick="submitSearchForm()">Search</button>
+    <form class="search-form" id="searchForm" method="GET" action="/categories/search">
+      <input class="search-input" type="text" name="query" placeholder="Search products">
+      <button class="search-button" type="submit">Search</button>
     </form>
   </div>
-
-
-  <div class="search-results" id="searchResults"></div>
 
   <% let categories2=['Home Living', 'Clothing' , 'Bags' , 'Jewelry' , 'Beauty' , 'Collectibles' , 'Art' , 'Books'
     , 'Other' ]; categories2.forEach(e=>{ %>
@@ -81,18 +14,5 @@
       <%=e%>
     </a>
     <% }) %>
-
       <div id="categoryContainer"></div>
-
-      <script>
-        function submitSearchForm() {
-          const searchQuery = document.getElementById('searchForm').elements.query.value;
-
-          // Construct the new URL with the search query
-          const newUrl = `/categories/search?query=${encodeURIComponent(searchQuery)}`;
-
-          // Redirect to the new URL
-          window.location.href = newUrl;
-        }</script>
-
       <%- include('../partials/footer') %>
