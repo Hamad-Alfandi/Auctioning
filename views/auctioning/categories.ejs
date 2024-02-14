@@ -29,38 +29,12 @@
 
   <h1>Page to view All Categories</h1>
 
-  <script>
-    // JavaScript array containing categories
-    let categories2 = ['Home Living', 'Clothing', 'Bags', 'Jewelry', 'Beauty', 'Collectibles', 'Art', 'Books', 'Other'];
+   <% let categories2 = ['Home Living', 'Clothing', 'Bags', 'Jewelry', 'Beauty', 'Collectibles', 'Art', 'Books', 'Other'];
+categories2.forEach(e=>{
+  %> <a href="../categories/<%=e%>"><%=e%></a>
+<% })
+%>
 
-// Function to create HTML elements for categories
-function createCategoryElements() {
-    let categoryContainer = document.getElementById('categoryContainer');
-
-    categories2.forEach(function(category) {
-        let categoryElement = document.createElement('div');
-        categoryElement.className = 'category';
-        categoryElement.textContent = category;
-        categoryElement.onclick = function() {
-            // You can add navigation logic here, e.g., window.location.href = 'categoryPage.html?category=' + encodeURIComponent(category);
-            window.location.href = '/categories/' + encodeURIComponent(category);
-
-        };
-
-        categoryContainer.appendChild(categoryElement);
-    });
-}
-
-// Ensure the script runs after the HTML has loaded
-document.addEventListener('DOMContentLoaded', createCategoryElements);
-
-
-     // Function to navigate to another page based on the category name
-     function navigateToCategory(categoryName) {
-      // Navigate to another page based on the category (replace with actual page URL)
-      window.location.href = 'categoryPage.html?category=' + encodeURIComponent(categoryName);
-    }
-  </script>
   <div id="categoryContainer"></div>
   <%- include('../partials/footer') %>
 
