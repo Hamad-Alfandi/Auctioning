@@ -1,4 +1,3 @@
-
 const Auction = require("../models/auction")
 const Product = require("../models/product")
 const Seller = require("../models/seller")
@@ -6,9 +5,7 @@ const passport = require("passport")
 
 const { ObjectId } = require("mongodb")
 
-
-const auction = require('../models/auction')
-
+const auction = require("../models/auction")
 
 function newAuction(req, res) {
   let userType
@@ -16,7 +13,7 @@ function newAuction(req, res) {
   if (req.user && req.user.role === "seller") {
     userType = req.user.role
     userId = req.user.sellerId
-    console.log(`found a user, type is: ${userType} role id is ${userId}`)
+    // console.log(`found a user, type is: ${userType} role id is ${userId}`)
   } else {
     userType = null
     userId = null
@@ -35,7 +32,7 @@ async function updateBid(req, res) {
   if (req.user && req.user.role === "buyer") {
     userType = req.user.role
     userId = req.user.buyerId
-    console.log(`found a user, type is: ${userType} role id is ${userId}`)
+    // console.log(`found a user, type is: ${userType} role id is ${userId}`)
   } else {
     userType = null
     userId = null
@@ -74,7 +71,7 @@ async function showAuction(req, res) {
     userType = req.user.role
     if (userType === "seller") {
       userId = req.user.sellerId
-      console.log(`seller id: ${sellerId}   req seller id: ${userId}`)
+      // console.log(`seller id: ${sellerId}   req seller id: ${userId}`)
       if (sellerId.toString() == userId) {
         belongToUser = true
       }
@@ -105,7 +102,7 @@ async function showAuction(req, res) {
 }
 
 async function showAuctions(req, res) {
-  console.log(`the user:${req.user}`)
+  // console.log(`the user:${req.user}`)
   let userType
   let userId
   if (req.user) {
@@ -115,7 +112,7 @@ async function showAuctions(req, res) {
     } else if (req.user.role === "buyer") {
       userId = req.user.buyerId
     }
-    console.log(`found a user, type is: ${userType} role id is ${userId}`)
+    // console.log(`found a user, type is: ${userType} role id is ${userId}`)
   } else {
     userType = null
     userId = null
@@ -142,13 +139,13 @@ async function showAuctions(req, res) {
 async function addAuction(req, res) {
   let userId
   if (req.user) {
-    console.log(
-      `user found in add auction with role id of ${req.user.sellerId}`
-    )
+    // console.log(
+    //   `user found in add auction with role id of ${req.user.sellerId}`
+    // )
     userId = req.user.sellerId
   } else {
     userId = null
-    console.log("no user found in add auction")
+    // console.log("no user found in add auction")
   }
   let productObj = {}
   let auctionObj = {}
@@ -176,15 +173,15 @@ async function edit(req, res) {
 
   let auctionId = productDetails.auction_id
   const auctionDetails = await Auction.findOne({
-    _id: auctionId
+    _id: auctionId,
   })
   let sellerId = auctionDetails.seller_id
-  let title = 'Update Auction'
-  res.render('auction/edit', {
+  let title = "Update Auction"
+  res.render("auction/edit", {
     title,
     productDetails,
     auctionDetails,
-    sellerId
+    sellerId,
   })
 }
 async function updateAuction(req, res) {
@@ -196,31 +193,31 @@ async function updateAuction(req, res) {
   }
   let productObj = {}
   let auctionObj = {}
-  productObj['name'] = req.body.name
-  productObj['description'] = req.body.description
-  productObj['image'] = req.body.image
+  productObj["name"] = req.body.name
+  productObj["description"] = req.body.description
+  productObj["image"] = req.body.image
 
-  auctionObj['category'] = req.body.category
-  auctionObj['seller_id'] = userId
-  auctionObj['endDate'] = req.body.endDate
-  auctionObj['startingBid'] = req.body.startingBid
-  console.log(productObj)
-  console.log(auctionObj)
+  auctionObj["category"] = req.body.category
+  auctionObj["seller_id"] = userId
+  auctionObj["endDate"] = req.body.endDate
+  auctionObj["startingBid"] = req.body.startingBid
+  // console.log(productObj)
+  // console.log(auctionObj)
   const productIdObject = new ObjectId(req.params.Productid)
   try {
     await Product.updateOne(
       { _id: productIdObject },
       {
-        $set: productObj
+        $set: productObj,
       }
     )
     let product = await Product.findById(req.params.Productid)
-    console.log(`the product: ${product}`)
+    // console.log(`the product: ${product}`)
     let auctionId = new ObjectId(product.auction_id)
     await Auction.updateOne(
       { _id: auctionId },
       {
-        $set: auctionObj
+        $set: auctionObj,
       }
     )
   } catch (err) {
@@ -231,7 +228,7 @@ async function updateAuction(req, res) {
 
 async function deleteAuction(req, res) {
   let product = await Product.findById(req.params.Productid)
-  console.log(`the product: ${product}`)
+  // console.log(`the product: ${product}`)
   let productId = new ObjectId(req.params.Productid)
   let auctionId = new ObjectId(product.auction_id)
   try {
@@ -253,6 +250,5 @@ module.exports = {
 
   edit,
   updateAuction,
-  deleteAuction
-
+  deleteAuction,
 }

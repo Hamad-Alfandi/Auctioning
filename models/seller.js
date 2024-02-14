@@ -20,13 +20,11 @@ const sellerSchema = new Schema(
     },
     reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }],
     auctions: [{ type: Schema.Types.ObjectId, ref: "Auction" }],
-
-    userID: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
+    userId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
   },
 
   {
