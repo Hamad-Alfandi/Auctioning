@@ -4,31 +4,33 @@ const Seller = require('../models/seller')
 const passport = require('passport')
 const s3 = require('../config/aws-config')
 const { ObjectId } = require('mongodb')
+
 const auction = require('../models/auction')
 const crypto = require('crypto')
+
 
 function newAuction(req, res) {
   let userType
   let userId
-  if (req.user && req.user.role === 'seller') {
+  if (req.user && req.user.role === "seller") {
     userType = req.user.role
     userId = req.user.sellerId
   } else {
     userType = null
     userId = null
   }
-  res.render('auction/new', {
-    title: 'Add auction',
+  res.render("auction/new", {
+    title: "Add auction",
     userId,
-    errorMsg: '',
-    userType
+    errorMsg: "",
+    userType,
   })
 }
 
 async function updateBid(req, res) {
   let userType
   let userId
-  if (req.user && req.user.role === 'buyer') {
+  if (req.user && req.user.role === "buyer") {
     userType = req.user.role
     userId = req.user.buyerId
   } else {
@@ -59,7 +61,7 @@ async function showAuction(req, res) {
 
   let auctionId = productDetails.auction_id
   const auctionDetails = await Auction.findOne({
-    _id: auctionId
+    _id: auctionId,
   })
 
   let sellerId = auctionDetails.seller_id
@@ -67,13 +69,13 @@ async function showAuction(req, res) {
   let belongToUser = false //checks if the auction belongs to the user seller logged in
   if (req.user) {
     userType = req.user.role
-    if (userType === 'seller') {
+    if (userType === "seller") {
       userId = req.user.sellerId
 
       if (sellerId.toString() == userId) {
         belongToUser = true
       }
-    } else if (userType === 'buyer') {
+    } else if (userType === "buyer") {
       userId = req.user.buyerId
     }
   } else {
@@ -84,8 +86,9 @@ async function showAuction(req, res) {
   //   _id: sellerId
   // })
   const sellerDetails = await Seller.findOne({
-    _id: sellerId
+    _id: sellerId,
   })
+
   const currentTime = new Date()
   const timeRemaining = auctionDetails.endDate - currentTime
   // const timeLeft = formatTime(timeRemaining)
@@ -103,7 +106,7 @@ async function showAuction(req, res) {
     timeLeft,
     productDetails,
     auctionDetails,
-    sellerDetails
+    sellerDetails,
   })
 }
 
@@ -112,9 +115,9 @@ async function showAuctions(req, res) {
   let userId
   if (req.user) {
     userType = req.user.role
-    if (req.user.role === 'seller') {
+    if (req.user.role === "seller") {
       userId = req.user.sellerId
-    } else if (req.user.role === 'buyer') {
+    } else if (req.user.role === "buyer") {
       userId = req.user.buyerId
     }
   } else {
@@ -138,11 +141,12 @@ async function showAuctions(req, res) {
     }
   ])
 
-  res.render('auctioning/show', {
-    title: 'Home',
+
+  res.render("auctioning/show", {
+    title: "Home",
     userType,
     userId,
-    recentProducts
+    recentProducts,
   })
 }
 
@@ -182,7 +186,7 @@ async function addAuction(req, res) {
 
   try {
     let createdAuction = await Auction.create(auctionObj)
-    productObj['auction_id'] = createdAuction._id
+    productObj["auction_id"] = createdAuction._id
     await Product.create(productObj)
   } catch (err) {
     console.log(err)
@@ -266,7 +270,9 @@ module.exports = {
   showAuctions,
   showAuction,
   updateBid,
+
   edit,
   updateAuction,
   deleteAuction
+
 }
