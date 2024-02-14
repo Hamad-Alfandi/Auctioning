@@ -5,6 +5,7 @@ const passport = require('passport')
 const s3 = require('../config/aws-config')
 const { ObjectId } = require('mongodb')
 const auction = require('../models/auction')
+const crypto = require('crypto')
 
 function newAuction(req, res) {
   let userType
@@ -158,9 +159,13 @@ async function addAuction(req, res) {
 
   let productImage = req.file
   let imageURL
+
+  const randomBytes = crypto.randomBytes(16)
+  let randImageName = randomBytes.toString('hex')
+
   let s3Params = {
     Bucket: 'eliteauctions-productimages',
-    Key: productImage.originalname,
+    Key: randImageName,
     Body: productImage.buffer
   }
 
