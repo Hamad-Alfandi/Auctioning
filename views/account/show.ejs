@@ -1,4 +1,26 @@
 <%- include('../partials/header') %>
+<style>
+#star-rating {
+  display: inline-flex;
+  background: transparent;
+  direction: rtl;
+}
+#star-rating input[type="radio"] {
+  display: none;
+}
+#star-rating label {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: url('star.png') no-repeat;
+}
+#star-rating input[type="radio"]:checked ~ label {
+  background: url('star-checked.png') no-repeat;
+}
+
+
+</style>
+
 <%  if (user && user.role === 'seller') { %>
 <h1>Seller name: <%= user.name %> </h1>
 
@@ -18,6 +40,8 @@
           <td><%= s.description %></td>
           <td> <%= s.reviewRate %></td>
         </tr>
+
+        
       <% }); %> 
           </tbody>
   </table>  
@@ -27,9 +51,11 @@
 
 <%  if (user && user.role === 'buyer') { %>
   <h1>buyer name: <%= user.name %> </h1>
-  
+  <h2><%= user.email %></h2>
+  <h2><%= user.avatar %></h2>
 
-<form action="/account/<%= user._id %>/reviews" method="post">
+
+<form action="/account/<%= user._id %>/reviews" method="post" id="star-rating">
  
   <textarea name="description" ></textarea>
   <input type="radio" name='reviewRate' value="1">1
