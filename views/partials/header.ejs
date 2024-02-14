@@ -3,17 +3,21 @@
 
   <head>
     <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    
   </head>
   <body>
+    <div id="logoDiv">
+      <img id="logoDivImg" src="/images/ELITEAUCTIONSLOGO.PNG" alt="elite auctions logo">
+    </div>
     <nav>
-      
       <a href="/auctioning" class="navBarLinks">Home</a>
       <a href="/categories" class="navBarLinks">All Products</a>
       <div class="search-container">
         <form class="search-form" id="searchForm" method="GET" action="/categories/search">
           <input class="search-input" type="text" name="query" placeholder="Search products">
-          <button class="search-button" type="submit">Search</button>
+          <button class="search-button" type="submit"><i class="small material-icons">search</i></button>
         </form>
       </div>
        <%  if (user) { 

@@ -1,14 +1,14 @@
 <%- include('../partials/header') %>
-<h2>Recently Added Auctions</h2>
+<h2 class="pageHeader">Recently Added Auctions</h2>
 <div class="auctionsContainerDiv">
 
 <div class="mainAuctionsDiv">
 <%  recentProducts.forEach((product) => {%>
   <div class="auctionItemDiv">
-
-    <h3><%=product.name%></h3>
-    <h3><%=product.auction[0].category%></h3>
-    <a href="auction/<%=product._id%>">See Details</a>
+<img src="<%=product.image%>" class="homePageProductImage">
+    <h3 class="homePageProductDetails homePageProductDetailsname"><%=product.name%></h3>
+    <h3 class="homePageProductDetails homePageProductDetailsCategory"><%=product.auction[0].category%></h3>
+    <a href="auction/<%=product._id%>" class="homePageProductDetails homePageProductDetailsLink">See Details</a>
   </div>
 <%})%>
 </div>
