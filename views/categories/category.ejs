@@ -1,17 +1,9 @@
 <%- include('../partials/header') %>
-<style>
-</style>
-
-
-<% auctionsWithProducts.forEach(e =>{ %>
-
-  <p>name: <%= e.name %> </p>
- <p>description: <%= e.description%></p>
- <br><br>
-<% }) %>
-
-
-
-
+<%  categoryProducts.forEach((product) => {%>
+  <div class="productItemDiv">
+    <h3><%=product.name%></h3>
+    <a href="../auction/<%=product._id%>">See Details</a>
+  </div>
+<%})%>
 
 <%- include('../partials/footer') %>

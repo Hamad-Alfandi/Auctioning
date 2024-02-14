@@ -6,28 +6,26 @@
   </head>
   <body>
     <nav>
-      <img src="/images/camera.svg">
-       <a href="/auctioning">Home</a>
-       <a href="/categories">All Products</a>
-
       
-       <a href="/account">Account</a>
-       
-       <a href="/account/signIn">Sign in</a>
+      <a href="/auctioning">Home</a>
+      <a href="/categories">All Products</a>
 
+       <%  if (user) { 
+       if(user.role === 'seller'){%>
+         <a href="/auction">Add Auction</a>
+         <% } %>
+         <a href="/account/<%= user._id %>">Account</a>
       
-       
-        <% } %>
-        <%  if (user && user.role === 'buyer') { %>
-          <a href="/account/<%= user._id %>">Account</a>
-       
-        <% } %>
-       <% if (!user) { %>
-       <a href="/auth/google" class="login">LOG IN&nbsp;<img src="https://i.imgur.com/FHjYyi0.png"></a>
-       <% } else { %>
-       <a  href="/logout">LOGOUT</a>
        <% } %>
-
+       <%  if (user && user.role === 'buyer') { %>
+         <a href="/account/<%= user._id %>">Account</a>
+      
+       <% } %>
+      <% if (!user) { %>
+      <a href="/auth/google" class="login">LOG IN&nbsp;<img src="https://i.imgur.com/FHjYyi0.png"></a>
+      <% } else { %>
+      <a  href="/logout">LOGOUT</a>
+      <% } %>
 
     </nav>
     <main>
