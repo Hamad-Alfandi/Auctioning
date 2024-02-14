@@ -8,7 +8,8 @@ const buyerSchema = new Schema(
       required: true,
     },
     userId: {
-      type: Schema.types.objectId,
+      type: Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
@@ -16,7 +17,7 @@ const buyerSchema = new Schema(
     email: String,
     reviews: [
       {
-        type: Schema.types.objectId,
+        type: Schema.Types.ObjectId,
         ref: "Review",
       },
     ],

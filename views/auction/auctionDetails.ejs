@@ -1,23 +1,36 @@
 <%- include('../partials/header') %>
 <h1><%=productDetails.name%></h1>
 <div class="productDetails">
-<div class="productDetailLeftDiv"><img src="https://www.dior.com/couture/ecommerce/media/catalog/product/9/Q/1699371916_M0565ONGE_M900_E01_GH.jpg" alt="<%=productDetails.name%>" style="width: 400px;">
-<h4>Time Left to Bid: <%=auctionDetails.endDate%></h4>
+<div class="productDetailLeftDiv">
+  <img src="<%=productDetails.image%>" alt="<%=productDetails.name%>" style="width: 400px;">
+<h4>End Date: <%=auctionDetails.endDate%></h4>
+<h4>Time Left to Bid: </h4>
+<h4 id="timeLeft"><%=timeLeft%></h4>
+
+
 </div>
 <div class="productDetailRightDiv">
+  <%if(belongToUser){%>
+    <div class="sellerEditDiv">
+      <form action="/auction/<%=productDetails._id%>/edit" method="GET" autocomplete="off">
+    <button class="sellerButton" id="sellerEditButton" type="submit">Edit</button></form>
+    <form action="/auction/<%=productDetails._id%>/?_method=DELETE" method="POST" autocomplete="off">
+    <button class="sellerButton" id="sellerDeleteButton" type="submit">Delete</button></form>
+  </div>
+    <%}%>
   <div class="biddingDiv">
-    
+    <!-- <h1><%=belongToUser%></h1> -->
   <%if(auctionDetails.highestBid){%>
   <h2>
-Current Highest Bid: </h2>
+Current Highest Bid:
+ </h2>
 <h3><%=auctionDetails.highestBid%>
   </h3>
   <%}else{%>
     <h2>Starting Bid:</h2>
     <h3><%=auctionDetails.startingBid%>
     <%}%>
-  <!-- CHANGE ONCE ACCOUNT LOGIN SETTLED -->
-  <%if(userType&&userType==='Buyer'){%>
+  <%if(user&&user.role==='buyer'){%>
     <h2>Bid:</h2>
    <form action="../auction/bid/<%=auctionDetails._id%>?_method=PUT" method="POST" autocomplete="off">
     <input type="text" placeholder="Bid" name="bidPrice" id="bidPriceInput"><label> BHD</label>
@@ -36,16 +49,49 @@ Current Highest Bid: </h2>
   </div>
 </div>
 </div>
-<!-- productDetails,
-auctionDetails,
-sellerDetails -->
+
+
+
+
+
 <script>
-  // for REGEX Validation
+// for client side count down timer
+let remainingTime = '<%= timeLeft %>';
+
+function updateTimer() {
+  let [hours, minutes, seconds] = remainingTime.split(':');
+  let remainingSeconds = parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
+  remainingSeconds--;
+
+  if (remainingSeconds < 0) {
+    document.getElementById('timeLeft').textContent = 'Auction Ended';
+
+    const submitButton = document.getElementById('submitButton');
+    if (userType && userType === 'buyer') { 
+    submitButton.disabled = true;
+    }
+  } else {
+    let newHours = Math.floor(remainingSeconds / 3600);
+    let newMinutes = Math.floor((remainingSeconds % 3600) / 60);
+    let newSeconds = remainingSeconds % 60;
+
+    let newTime = `${newHours.toString().padStart(2, '0')}:${newMinutes.toString().padStart(2, '0')}:${newSeconds.toString().padStart(2, '0')}`;
+console.log(newTime)
+    document.getElementById('timeLeft').innerText = newTime;
+
+    remainingTime = newTime; // Update the remainingTime variable
+  }
+}
+  updateTimer();
+  setInterval(updateTimer, 1000);
+
+  // for REGEX form Validation
+
   document.addEventListener('DOMContentLoaded', function() {
   let numberInput = document.getElementById('bidPriceInput');
   let submitButton = document.getElementById('submitButton');
   let errorMessage = document.getElementById('errorMessage');
-
+if(numberInput){
   numberInput.addEventListener('input', function(event) {
     let inputValue = numberInput.value;
     let numberRegex = /^\d+(\.\d+)?$/;
@@ -61,8 +107,6 @@ sellerDetails -->
     }
 
     if (isValidNumber && (parsedInputValue > parsedStartingBid)) {
-    
-    // if ((numberRegex.test(inputValue)&&parseFloat(inputValue)>parseFloat('<%=auctionDetails.startingBid%>'))||(numberRegex.test(inputValue)&&parseFloat(inputValue)>parseFloat('<%=auctionDetails.startingBid%>')&&'<%=auctionDetails.highestBid%>'&& parseFloat(inputValue)>parseFloat('<%=auctionDetails.highestBid%>'))) {
       submitButton.disabled = false;
       errorMessage.style.display = 'none';
     } else {
@@ -70,7 +114,7 @@ sellerDetails -->
       errorMessage.style.display = 'block';
       errorMessage.textContent = 'Invalid! Ensure it is a number higher than the current or starting bid.';
     }
-  });
+  });}
 });
 </script>
 <%- include('../partials/footer') %>
