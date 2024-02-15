@@ -6,7 +6,7 @@
 
 A trello board was used to keep track of development progress and can be viewed [Trello](https://trello.com/b/9r5xdcug/auctionwebsite)
 
-The project itself was deployed and can be viewed [here]()
+The project itself was deployed and can be viewed [here](https://eliteauctions.fly.dev/auctioning)
 
 ## Overview  
 
